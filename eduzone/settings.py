@@ -123,5 +123,6 @@ STATIC_URL = '/static/'
 # see https://help.pythonanywhere.com/pages/DjangoStaticFiles for more info
 MEDIA_ROOT = '/home/eduzonelearning/media'
 MEDIA_URL = '/media/'
-STATIC_ROOT = '/home/eduzonelearning/static'
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'eduzone_static')
 STATIC_URL = '/static/'

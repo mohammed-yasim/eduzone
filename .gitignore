@@ -9,6 +9,7 @@ __pycache__/
 # Distribution / packaging
 .Python
 build/
+eduzone_static/
 develop-eggs/
 dist/
 downloads/
