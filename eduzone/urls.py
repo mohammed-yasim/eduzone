@@ -14,8 +14,17 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from django.conf import settings
+from django.conf.urls.static import static
 from django.urls import path
-
+from django.conf.urls import url,include
+from django.views.generic import TemplateView
+from classroom.views import index
+from studentsonly.views import index as mainpage
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('console/',include('diya_api.urls')),
+    url(r'classroom', index, name="home"),
+    url(r'$^',mainpage),
 ]
+urlpatterns+= static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

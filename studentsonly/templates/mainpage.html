@@ -1,0 +1,533 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>StudentsOnly | The Learning App :: studentsonly.in</title>
+	<!-- for-mobile-apps -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="keywords" content="" />
+
+	<script>
+		addEventListener("load", function () {
+			setTimeout(hideURLbar, 0);
+		}, false);
+
+		function hideURLbar() {
+			window.scrollTo(0, 1);
+		}
+	</script>
+	<!-- css files -->
+	    <link rel="icon" href="{% static "classroom/favicon.ico" %}" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="theme-color" content="#BF3A3A" />
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static "classroom/apple-touch-icon.png" %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static "classroom/favicon-32x32.png" %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static "classroom/favicon-16x16.png" %}">
+    <link rel="manifest" href="{% static "classroom/site.webmanifest" %}">
+    <meta name="description" content="The Learning App" />
+    <link rel="apple-touch-icon" href="{% static "classroom/logo192.png" %}" />
+    <link rel="manifest" href="{% static "classroom/manifest.json" %}" />
+	<link href="{% static 'assets/css/bootstrap.css' %}" rel='stylesheet' type='text/css' /><!-- bootstrap css -->
+	<link href="{% static 'assets/css/style.css' %}" rel='stylesheet' type='text/css' /><!-- custom css -->
+	<link href="{% static 'assets/css/css_slider.css' %}" type="text/css" rel="stylesheet" media="all">
+	<link href="{% static 'assets/css/font-awesome.min.css' %}" rel="stylesheet"><!-- fontawesome css -->
+	<!-- //css files -->
+
+	<!-- google fonts -->
+	<link
+		href="//fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i&amp;subset=latin-ext"
+		rel="stylesheet">
+	<!-- //google fonts -->
+	<style>
+		::-webkit-scrollbar{
+			width:6px;
+		}
+		::-webkit-scrollbar-thumb{
+			background: red;
+		}
+	</style>
+
+</head>
+
+<body>
+
+	<!-- header -->
+	<header>
+		<div class="top-head container">
+			<div class="ml-auto text-right right-p">
+				<ul>
+					<span class="fa fa-envelope-open text-white"></span> <a class="text-white"
+						href="mailto:studentsonly.in@gmail.com">studentsonly.in@gmail.com</a> </li>
+				</ul>
+			</div>
+		</div>
+		<div class="container">
+			<!-- nav -->
+			<nav class="py-3 d-lg-flex">
+				<div id="logo">
+					<h1> <a href="index.html"><img style="border-radius: 0;" src="{% static 'assets/images/s2.png' %}" alt=""> StudentsOnly.in </a></h1>
+				</div>
+				<label for="drop" class="toggle"><span class="fa fa-bars"></span></label>
+				<input type="checkbox" id="drop" />
+				<ul class="menu ml-auto mt-1">
+					<li class="active"><a href="index.html">Home</a></li>
+					<li class=""><a href="#about">About</a></li>
+					<li class=""><a href="#features">Features</a></li>
+					<li class=""><a href="#stats">Status</a></li>
+					<li class=""><a href="#testi">Testimonials</a></li>
+					<li class=""><a href="#team">Contact us</a></li>
+					<li class=""><a href="#subscribe">Subscribe</a></li>
+				</ul>
+			</nav>
+			<!-- //nav -->
+		</div>
+	</header>
+	<!-- //header -->
+
+	<!-- banner -->
+	<div class="banner" id="home">
+		<div class="layer">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-7 banner-text-w3pvt">
+						<!-- banner slider-->
+						<div class="csslider infinity" id="slider1">
+							<input type="radio" name="slides" checked="checked" id="slides_1" />
+							<input type="radio" name="slides" id="slides_2" />
+							<input type="radio" name="slides" id="slides_3" />
+							<ul class="banner_slide_bg">
+								<li>
+									<div class="container-fluid">
+										<div class="w3ls_banner_txt">
+											<h3 class="b-w3ltxt text-capitalize mt-md-4">Welcome Back,</h3>
+											<h3 class="b-w3ltxt text-capitalize mt-md-2">Students!</h4>
+												<p class="w3ls_pvt-title my-3">Are you all geared up for this school
+													year <br>
+													Start learning the best </p>
+												<a href="/classroom" class="btn btn-banner my-3">Go to Classroom</a>
+										</div>
+									</div>
+								</li>
+								<li>
+									<div class="container-fluid">
+										<div class="w3ls_banner_txt">
+											<h3 class="b-w3ltxt text-capitalize mt-md-4">Education Courses.</h3>
+											<h4 class="b-w3ltxt text-capitalize mt-md-2">Study For Better Future</h4>
+											<p class="w3ls_pvt-title my-3">Are you all geared up for this school year
+												<br>
+												Start learning the best </p>
+												<a href="/classroom" class="btn btn-banner my-3">Go to Classroom</a>
+										</div>
+									</div>
+								</li>
+								<li>
+									<div class="container-fluid">
+										<div class="w3ls_banner_txt">
+											<h3 class="b-w3ltxt text-capitalize mt-md-4">Dream Big.</h3>
+											<h4 class="b-w3ltxt text-capitalize mt-md-2">Be Smarter Than Your Sources
+											</h4>
+											<p class="w3ls_pvt-title my-3">Are you all geared up for this school year
+												<br>
+												Start learning the best </p>
+												<a href="/classroom" class="btn btn-banner my-3">Go to Classroom</a>
+										</div>
+									</div>
+								</li>
+							</ul>
+							<div class="navigation">
+								<div>
+									<label for="slides_1"></label>
+									<label for="slides_2"></label>
+									<label for="slides_3"></label>
+								</div>
+							</div>
+						</div>
+						<!-- //banner slider-->
+					</div>
+					<div class="col-lg-5 col-md-8 px-lg-3 px-0">
+						<div class="banner-form-w3 ml-lg-5 d-none">
+							<div class="padding">
+								<!-- banner form -->
+								<!--- form action="#" method="post">
+								<h5 class="mb-3">Start Learning Today At Rs 1</h5>
+								<div class="form-style-w3ls">
+									<input placeholder="Student Name" name="name" type="text" required="">
+									<input placeholder="Enter your School" name="name" type="text" required="">
+									<select>
+									  <option value="0">Class or Standard</option>
+									  <option value="1">class LKG</option>
+									  <option value="1">class UKG</option>
+									  <option value="1">class 1st</option>
+									  <option value="1">class 2nd</option>
+									  <option value="1">class 3rd</option>
+									  <option value="1">class 4th</option>
+									  <option value="1">class 5th</option>
+									  <option value="1">class 6th</option>
+									  <option value="1">class 7th</option>
+									  <option value="1">class 8th</option>
+									  <option value="1">class 9th</option>
+									  <option value="1">class 10th</option>
+									  <option value="1">class +one</option>
+									  <option value="1">class +two</option>
+									  <option value="1">Other</option>
+									</select>
+									<input placeholder="Your Email Id" name="email" type="email" required="">
+									<input placeholder="Contact Number" name="number" type="text" required="">
+									<button Class="btn"> Get Started</button>
+									
+									<span>By registering, you agree to our <a href="#">Terms & Conditions.</a></span>
+								</div>
+							</form--->
+								<!-- //banner form -->
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- //banner -->
+
+	<!-- what we Serve -->
+	<section class="banner-bottom py-5" id="about">
+		<div class="container py-lg-5">
+			<h2 class="heading mb-sm-5 mb-4"> Build Your Career With Our Education System</h2>
+			<div class="row bottom-grids">
+				<div class="col-md-3 col-sm-6">
+					<div class="three-grids-w3pvt-1 d-flex text-right">
+						<div class="text-effect-wthree midd-text-w3ls p-3 w-100">
+							<h5 class="text-capitalize text-bl font-weight-bold">LKG TO +2</h5>
+							<p>Education</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-3 col-sm-6 mt-sm-0 mt-4">
+					<div class="three-grids-w3pvt-2 d-flex text-right">
+						<div class="text-effect-wthree midd-text-w3ls p-3 w-100">
+							<h5 class="text-capitalize text-bl font-weight-bold">Anywhere,Anytime </h5>
+							<p>Learning</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-3 col-sm-6 mt-md-0 mt-4">
+					<div class="three-grids-w3pvt-3 d-flex text-right">
+						<div class="text-effect-wthree midd-text-w3ls p-3 w-100">
+							<h5 class="text-capitalize text-bl font-weight-bold">Entrance & PSC</h5>
+							<p>Coaching</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-3 col-sm-6 mt-md-0 mt-4">
+					<div class="three-grids-w3pvt-4 d-flex text-right">
+						<div class="text-effect-wthree midd-text-w3ls p-3 w-100">
+							<h5 class="text-capitalize text-bl font-weight-bold">Free counsellings</h5>
+							<p>Support</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-5">
+					<p class="mt-4">
+						StudentsOnly.in provides best in segment Online classes at most affordable price Rs 1/day.Our
+						team is not seeing
+						a business in this, as quality education is the right of a human men we provide this as a
+						service.
+					</p>
+				</div>
+				<div class="col-lg-1 col-sm-4 col-5 ser-img">
+					<img src="{% static 'assets/images/s1.png' %}" class="mt-4" alt="">
+					<img src="{% static 'assets/images/s4.png' %}" class="mt-4" alt="">
+				</div>
+				<div class="col-lg-1 col-sm-4 col-5 ser-img">
+					<img src="{% static 'assets/images/s3.png' %}" class="mt-4" alt="">
+					<img src="{% static 'assets/images/s5.png' %}" class="mt-4" alt="">
+				</div>
+				<div class="col-lg-5">
+					<p class="mt-4"> In addition to quality education we've planned tons of fun activities for you.Also
+						can showcase
+						your talent from different field on our platform.We encourage and gives full support for your
+						learning activities.
+					</p>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- //what we Serve -->
+
+	<!-- services -->
+	<section class="services py-5" id="features">
+		<div class="container">
+			<h3 class="heading mb-5">Our Features</h3>
+			<div class="row ml-sm-5">
+				<div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+					<div class="our-services-wrapper mb-60">
+						<div class="services-inner">
+							<div class="our-services-img">
+								<img src="{% static 'assets/images/s1.png' %}" alt="">
+							</div>
+							<div class="our-services-text">
+								<h4>Quality Education</h4>
+								<p>The best in segment classes at most affordable price Rs 1/day </p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+					<div class="our-services-wrapper mb-60">
+						<div class="services-inner">
+							<div class="our-services-img bg-white">
+								<img src="{% static 'assets/images/s2.png' %}" alt="">
+							</div>
+							<div class="our-services-text">
+								<h4>Easy Learning</h4>
+								<p>Activity based study makes you memmorize what you learn</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+					<div class="our-services-wrapper mb-60">
+						<div class="services-inner">
+							<div class="our-services-img">
+								<img src="{% static 'assets/images/s3.png' %}" alt="">
+							</div>
+							<div class="our-services-text">
+								<h4>Multiple Languages</h4>
+								<p>You can learn in English Or Malayalam Languages </p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+					<div class="our-services-wrapper mb-60">
+						<div class="services-inner">
+							<div class="our-services-img">
+								<img src="{% static 'assets/images/s4.png' %}" alt="">
+							</div>
+							<div class="our-services-text">
+								<h4>Schedule</h4>
+								<p>Learn on your schedule. Anytime,Anywhere</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+					<div class="our-services-wrapper mb-60">
+						<div class="services-inner">
+							<div class="our-services-img">
+								<img src="{% static 'assets/images/s5.png' %}" alt="">
+							</div>
+							<div class="our-services-text">
+								<h4>Talent </h4>
+								<p>We provide venue for developing your talents</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+					<div class="our-services-wrapper mb-60">
+						<div class="services-inner">
+							<div class="our-services-img">
+								<img src="{% static 'assets/images/s6.png' %}" alt="">
+							</div>
+							<div class="our-services-text">
+								<h4>Activities</h4>
+								<p>Extra activity sections like exhibition,Counselling etc </p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- positioned image -->
+			<div class="position-image">
+				<img src="{% static 'assets/images/services.png' %}" alt="" class="img-fluid">
+			</div>
+			<!-- //positioned image -->
+		</div>
+	</section>
+	<!-- //services -->
+
+	<!-- stats section -->
+	<section class="section-stats" id="stats">
+		<div class="py-5">
+			<div class="container py-lg-5">
+				<h3 class="heading mb-sm-5 mb-4">Our statistics</h3>
+				<div class="row text-center">
+					<div class="col-lg-3 col-6">
+						<div class="w3layouts_stats_left w3_counter_grid">
+							<div class="stats-icon">
+								<span class="fa fa-credit-card"></span>
+							</div>
+							<p class="counter">11568</p>
+							<p class="para-text-w3ls">Students Enrolled</p>
+						</div>
+					</div>
+					<div class="col-lg-3 col-6">
+						<div class="w3layouts_stats_left w3_counter_grid2">
+							<div class="stats-icon">
+								<span class="fa fa-users"></span>
+							</div>
+							<p class="counter">185</p>
+							<p class="para-text-w3ls">Professional Teachers</p>
+						</div>
+					</div>
+					<div class="col-lg-3 col-6 mt-lg-0 mt-4">
+						<div class="w3layouts_stats_left w3_counter_grid1">
+							<div class="stats-icon">
+								<span class="fa fa-dollar"></span>
+							</div>
+							<p class="counter">1422</p>
+							<p class="para-text-w3ls">Classes Conducted</p>
+						</div>
+					</div>
+					<div class="col-lg-3 col-6 mt-lg-0 mt-4">
+						<div class="w3layouts_stats_left w3_counter_grid1">
+							<div class="stats-icon">
+								<span class="fa fa-users"></span>
+							</div>
+							<p class="counter">7850</p>
+							<p class="para-text-w3ls">Media Followers</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- //stats section -->
+
+	<!-- other services -->
+
+	<!-- //other services -->
+
+	<!-- testimonials -->
+	<section class="testimonials" id="testi">
+		<div class="layer py-lg-5">
+			<div class="container py-5">
+				<h3 class="heading mb-5">What Parents Say About Us</h3>
+				<div class="text-center">
+					<div class="row">
+						<div class="col-md-6">
+							<div class="testi-info-text">
+								<h4>Best Education i have ever seen</h4>
+								<p>
+									<span class="fa fa-quote-left"></span> The courses are very simple and up to the
+									expectations at very affordable prices..My son can able to catch the lectures at a
+									single watch.Thank you team
+									<span class="fa ml-2 fa-quote-right"></span>
+								</p>
+							</div>
+							<div class="testi-pos">
+								<img src="{% static 'assets/' %}" alt="" class="img-fluid rounded-circle mb-3" />
+								<h4> "John Elisa" </h4>
+							</div>
+						</div>
+						<div class="col-md-6 mt-md-0 mt-5">
+							<div class="testi-info-text">
+								<h4>Amazing user experience</h4>
+								<p>
+									<span class="fa fa-quote-left"></span> As the lectures are available in multiple
+									languages it is very useful to catch the content easily.A very big thanks for such a
+									great job
+									<span class="fa ml-2 fa-quote-right"></span>
+								</p>
+							</div>
+							<div class="testi-pos">
+								<img src="{% static 'assets/' %}" alt="" class="img-fluid rounded-circle mb-3" />
+								<h4>"Divya S Pillai"</h4>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- //testimonials -->
+
+	<!-- Team  -->
+
+	<!-- //Team -->
+
+	<!-- subscribe -->
+	<section class="subscribe" id="subscribe">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-lg-5 d-flex subscribe-left p-sm-5 py-4">
+					<div class="image mr-3">
+						<img src="{% static 'assets/images/mail.png' %}" alt="" class="img-fluid">
+					</div>
+					<div class="text">
+						<h3>Subscribe To Our Newsletter</h3>
+					</div>
+				</div>
+				<div class="col-lg-7 subscribe-right p-sm-5 py-3">
+					<form action="#" method="post">
+						<input type="email" name="email" placeholder="Enter your email here" required="">
+						<button class="btn1"><span class="fa fa-paper-plane" aria-hidden="true"></span></button>
+					</form>
+					<p>we never share your email with anyone else</p>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- //subscribe -->
+
+	<!-- footer -->
+	<footer>
+		<div class="footer-layer py-sm-5 pt-5 pb-3">
+			<div class="container py-md-3">
+				<div class="footer-grid_section text-center">
+					<div class="footer-title mb-3">
+						<a href="#"><img style="border-radius:0px" src="{% static 'assets/images/s2.png' %}" alt="">
+							StudentsOnly.in</a>
+					</div>
+					<div class="footer-text">
+						<p>“The only person who is educated is the one who has learned how to learn …and change.”</p>
+					</div>
+					<ul class="social_section_1info">
+						<li class="mb-2 facebook"><a href="#"><span class="fa fa-facebook"></span></a></li>
+						<li class="mb-2 twitter"><a href="https://wa.me/918590309264"><span
+									class="fa fa-whatsapp"></span></a></li>
+						<li class="google"><a href="#"><span class="fa fa-google-plus"></span></a></li>
+						<li class="linkedin"><a href="#"><span class="fa fa-linkedin"></span></a></li>
+						<li class="pinterest"><a href="#"><span class="fa fa-pinterest"></span></a></li>
+						<li class="vimeo"><a href="#"><span class="fa fa-twitter"></span></a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</footer>
+	<!-- //footer -->
+
+	<!-- copyright -->
+	<section class="copyright">
+		<div class="container py-4">
+			<div class="row bottom">
+				<ul class="col-lg-6 links p-0">
+					<li><a href="#why" class="">Why Choose Us</a></li>
+					<li><a href="#services" class="">Services </a></li>
+					<li><a href="#team" class="">Teachers </a></li>
+					<li><a href="#testi" class="">Testimonials </a></li>
+				</ul>
+				<div class="col-lg-6 copy-right p-0">
+					<p class="">© <a href=""> Eduzone. 2020 </a> All rights reserved 
+						
+					</p>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- //copyright -->
+
+	<!-- move top -->
+	<div class="move-top text-right">
+		<a href="#home" class="move-top">
+			<span class="fa fa-angle-up  mb-3" aria-hidden="true"></span>
+		</a>
+	</div>
+	<!-- move top -->
+
+</body>
+
+</html>

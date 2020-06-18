@@ -1,0 +1,71 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link href="{% static 'metro/css/metro-all.css' %}" rel="stylesheet">
+
+    <title>Login System KTUNSS</title>
+
+    <style>
+        .login-form {
+            width: 350px;
+            height: auto;
+            top: 50%;
+            margin-top: -160px;
+        }
+        .errorlist{
+            list-style:none;
+            font-size:10pt;
+            color:red;
+            }
+    </style>
+</head>
+<body class="h-vh-100 bg-brandColor2">
+    <form class="login-form bg-white p-6 mx-auto border bd-default win-shadow"
+          data-role="validator"
+          action="javascript:"
+          data-clear-invalid="1000"
+          data-on-error-form="invalidForm"
+          data-on-validate-form="validateForm"
+          method="post">
+           {% csrf_token %}
+           {% autoescape off %}
+        <span class="mif-vpn-lock mif-4x place-right" style="margin-top: -10px;"></span>
+        <h2 class="text-light">Login to service</h2>
+         {{ form.non_field_errors }}
+         
+        <hr class="thin mt-4 mb-4 bg-white">
+        <div class="form-group">
+        {{ form.username }}
+        </div>
+        <div class="form-group">
+            {{ form.password }}
+        </div>
+        <div class="form-group mt-10">
+            <a href="/" class="place-right">Back to Home</a>
+            <button class="button">Login</button>
+        </div>
+        {% endautoescape %}
+    </form>
+    <script src="{% static 'metro/js/metro.js' %}"></script>
+    <script>
+        function invalidForm(){
+            var form  = $(this);
+            form.addClass("ani-ring");
+            setTimeout(function(){
+                form.removeClass("ani-ring");
+            }, 1000);
+        }
+
+        function validateForm(){
+            $(".login-form").animate({
+                opacity: 0
+            }).attr("action","{{ app_path }}").submit();;
+        }
+    </script>
+
+</body>
+</html>
