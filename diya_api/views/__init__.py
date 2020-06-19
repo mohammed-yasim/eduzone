@@ -48,26 +48,38 @@ def channels(request):
         json_template['data'] = res
         loadingpagetime = datetime.now().timestamp() * 1000 - start
         print(loadingpagetime)
-        return HttpResponse(json.dumps(json_template), content_type="text/json-comment-filtered")
+        return HttpResponse(json.dumps(json_template), content_type="application/json")
     return JsonResponse(json_template)
 @csrf_exempt
 def channel(request,name):
     start = datetime.now().timestamp() * 1000
-    json_template = {'response': 1,'status': 'success','message':'','data':{}}
-    q_channel = Channel.objects.get(uri=name)
-    json_template['data']['name'] = q_channel.name
-    queryset = Programme.objects.filter(channel=q_channel)
-    if(queryset.count() >= 1):
-        post_liste = serializers.serialize('json', queryset)
-        var_list = []
-        for data in json.loads(post_liste):
-            var_list.append(data['fields'])
-        json_template['data']['programmes'] = var_list
-        loadingpagetime = datetime.now().timestamp() * 1000 - start
-        print(loadingpagetime)
-        return HttpResponse(json.dumps(json_template), content_type="text/json-comment-filtered")
-        
-    return JsonResponse(json_template)
+    json_template = {'response': 200,'status': 'OK','message':'','data':{}}
+    try:
+        q_channel = Channel.objects.get(uri=name)
+        json_template['data']['name'] = q_channel.name
+        if(q_channel.icon):
+            json_template['data']['icon'] = "%s" %(q_channel.icon)
+    
+        json_template['data']['uri'] = q_channel.uri
+        json_template['data']['programmes'] = []
+        try:
+            queryset = Programme.objects.filter(channel=q_channel)
+            if(queryset.count() >= 1):
+                post_liste = serializers.serialize('json', queryset)
+                var_list = []
+                for data in json.loads(post_liste):
+                    var_list.append(data['fields'])
+                    json_template['data']['programmes'] = var_list
+                loadingpagetime = datetime.now().timestamp() * 1000 - start
+                print(loadingpagetime)
+        except:
+            pass
+        return HttpResponse(json.dumps(json_template), content_type="application/json")
+    except Exception  as e:
+        json_template['response'] = 404
+        json_template['status'] = 'Not Data Found'
+        json_template['message'] = '%s'%(e)
+    return HttpResponse(json.dumps(json_template), content_type="application/json")
 
 @csrf_exempt
 def programme(request,name,pgm):
@@ -97,5 +109,5 @@ def programme(request,name,pgm):
         var_list+="]"
         res = ast.literal_eval(var_list) 
         json_template['data'] = res
-        return HttpResponse(json.dumps(json_template), content_type="text/json-comment-filtered")
+        return HttpResponse(json.dumps(json_template), content_type="application/json")
     return JsonResponse(json_template)
