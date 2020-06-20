@@ -1,27 +1,17 @@
-from django.contrib.admin.forms import AdminAuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm
 from django.utils.translation import gettext_lazy as _
 from django import forms
 
-
-class UserLoginForm(AdminAuthenticationForm):
+class UserLoginForm(AuthenticationForm):
 
     error_messages = {
-        **AdminAuthenticationForm.error_messages,
+        **AuthenticationForm.error_messages,
         'invalid_login': _(
             "Please enter the correct %(username)s and password for a staff "
             "account. Note that both fields may be case-sensitive."
         ),
     }
     required_css_class = 'required'
-
-    def confirm_login_allowed(self, user):
-        super().confirm_login_allowed(user)
-        if not user.is_staff:
-            raise forms.ValidationError(
-                self.error_messages['invalid_login'],
-                code='invalid_login',
-                params={'username': self.username_field.verbose_name}
-            )
     def __init__(self, *args, **kwargs):
         super(UserLoginForm, self).__init__(*args, **kwargs)
 
@@ -42,3 +32,14 @@ class UserLoginForm(AdminAuthenticationForm):
         'data-prepend':"<span class='mif-key'>"
         }
 ))
+
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
+
+class SignUpForm(UserCreationForm):
+    username = forms.CharField(max_length=30)
+    email = forms.EmailField(max_length=200)
+
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'password1', 'password2', )

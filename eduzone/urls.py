@@ -22,8 +22,11 @@ from django.views.static import serve
 from django.views.generic import TemplateView
 from classroom.views import index
 from studentsonly.views import index as mainpage
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('accounts/',include('classroom.urls')),
     path('console/',include('diya_api.urls')),
     url(r'classroom', index, name="home"),
     url(r'classroom/(?P<path>.*)$', index, name="home"),

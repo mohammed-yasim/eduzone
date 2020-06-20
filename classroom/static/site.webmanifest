@@ -1,7 +1,7 @@
 {
     "short_name": "StudentsOnly",
     "name": "StudentsOnly.in The learning App",
-    "start_url": "/classroom/",
+    "start_url": ".",
     "icons": [{
         "src": "/static/favicon.ico",
         "sizes": "48x48",
