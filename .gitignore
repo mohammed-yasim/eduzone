@@ -5,6 +5,10 @@ __pycache__/
 
 # C extensions
 *.so
+#custom
+video_thumb/
+program_thumb/
+channel_thumb/
 
 # Distribution / packaging
 .Python

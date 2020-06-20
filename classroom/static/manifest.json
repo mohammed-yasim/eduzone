@@ -1,0 +1,21 @@
+{
+  "short_name": "StudentsOnly",
+  "name": "StudentsOnly.in The learning App",
+  "start_url": "/classroom/",
+  "icons": [{
+      "src": "/static/favicon.ico",
+      "sizes": "48x48",
+      "type": "image/x-icon"
+  }, {
+      "src": "/static/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+  }, {
+      "src": "/static/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+  }],
+  "theme_color": "#BF3A3A",
+  "background_color": "#e0e0e0",
+  "display": "standalone"
+}

@@ -1,22 +1,21 @@
 {
     "short_name": "StudentsOnly",
     "name": "StudentsOnly.in The learning App",
-    "start_url": "https://studentsonly.in/classroom/",
-    "scope": "/classroom",
+    "start_url": "/classroom/",
     "icons": [{
-        "src": "/static/classroom/favicon.ico",
-        "sizes": "64x64 32x32 24x24 16x16",
+        "src": "/static/favicon.ico",
+        "sizes": "48x48",
         "type": "image/x-icon"
     }, {
-        "src": "/static/classroom/android-chrome-192x192.png",
+        "src": "/static/android-chrome-192x192.png",
         "sizes": "192x192",
         "type": "image/png"
     }, {
-        "src": "/static/classroom/android-chrome-512x512.png",
+        "src": "/static/android-chrome-512x512.png",
         "sizes": "512x512",
         "type": "image/png"
     }],
     "theme_color": "#BF3A3A",
     "background_color": "#e0e0e0",
     "display": "standalone"
-}
+  }

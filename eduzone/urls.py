@@ -18,6 +18,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
 from django.conf.urls import url,include
+from django.views.static import serve 
 from django.views.generic import TemplateView
 from classroom.views import index
 from studentsonly.views import index as mainpage
@@ -25,6 +26,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('console/',include('diya_api.urls')),
     url(r'classroom', index, name="home"),
+    url(r'classroom/(?P<path>.*)$', index, name="home"),
     url(r'$^',mainpage),
+    #url(r'^media/(?P<path>.*)$', serve,{'document_root': settings.MEDIA_ROOT}),
+    #url(r'^static/(?P<path>.*)$', serve,{'document_root': settings.STATIC_ROOT}), 
 ]
 urlpatterns+= static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
