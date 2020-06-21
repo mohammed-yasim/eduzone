@@ -1,17 +1,48 @@
-<h2>Sign up Form</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+    <style>
+      form{
+        max-width: 400px;
+        margin: auto;
+      }
+    </style>
+
+</head>
+<body>
+  
 <form method="post">
+  
+<h2>Sign up Form</h2>
   {% csrf_token %}
-  {% for field in form %}
-    <p>
-      {{ field.label_tag }}<br>
-      {{ field }}
-      {% if field.help_text %}
-        <small style="color: grey">{{ field.help_text }}</small>
-      {% endif %}
-      {% for error in field.errors %}
-        <p style="color: red">{{ error }}</p>
-      {% endfor %}
-    </p>
+  
+  {% for error in field.errors %}
+  <p style="color: red">{{ error }}</p>
   {% endfor %}
+  <div>
+  {{ form.first_name }}
+  {{ form.last_name }}
+</div>
+<div> {{ form.username }}</div>
+
+<div> {{ form.password1 }}</div>
+<div> {{ form.password2 }}</div>
+<div> {{ form.mobile }}</div>
   <button type="submit">Sign up</button>
 </form>
+</body>
+</html>
+<!--
+{% for field in form %}
+  <div>
+    {{ field.label_tag }}<br>
+    {{ field }}
+    {% if field.help_text %}
+    <small style="color: grey">{{ field.help_text }}</small>
+    {% endif %}
+  </div>
+  {% endfor %}
+  -->

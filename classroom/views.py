@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
-@login_required()
-def index(request,path=0):
+@login_required(login_url="/accounts/login")
+def app(request,path=0):
     return render(request,'index.html')
 
 from django.shortcuts import render

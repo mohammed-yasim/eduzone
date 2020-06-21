@@ -20,7 +20,7 @@ from django.urls import path
 from django.conf.urls import url,include
 from django.views.static import serve 
 from django.views.generic import TemplateView
-from classroom.views import index
+from classroom.views import app
 from studentsonly.views import index as mainpage
 
 
@@ -28,8 +28,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/',include('classroom.urls')),
     path('console/',include('diya_api.urls')),
-    url(r'classroom', index, name="home"),
-    url(r'classroom/(?P<path>.*)$', index, name="home"),
+    url(r'classroom', app, name="home"),
+    #url(r'classroom/(?P<path>.*)$', app, name="homess"),
     url(r'$^',mainpage),
     #url(r'^media/(?P<path>.*)$', serve,{'document_root': settings.MEDIA_ROOT}),
     #url(r'^static/(?P<path>.*)$', serve,{'document_root': settings.STATIC_ROOT}), 

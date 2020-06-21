@@ -7,8 +7,8 @@ class UserLoginForm(AuthenticationForm):
     error_messages = {
         **AuthenticationForm.error_messages,
         'invalid_login': _(
-            "Please enter the correct %(username)s and password for a staff "
-            "account. Note that both fields may be case-sensitive."
+            "Please enter the correct %(username)s and password."
+            " Note that both fields may be case-sensitive."
         ),
     }
     required_css_class = 'required'
@@ -37,9 +37,25 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
 class SignUpForm(UserCreationForm):
-    username = forms.CharField(max_length=30)
-    email = forms.EmailField(max_length=200)
+    required_css_class = 'required'
+    def __init__(self, *args, **kwargs):
+        super(UserCreationForm, self).__init__(*args, **kwargs)
+    username = forms.CharField(max_length=30,widget=forms.TextInput(
+        attrs={'autofocus':'',
+            'placeholder': 'Enter your Username...', 'id': 'hello',
+        'data-validate':"required minlength=5",
+        'data-role':"input",
+        'data-prepend':"<span class='mif-envelop'>"
+        }))
+    mobile = forms.CharField(max_length=10,widget=forms.TextInput(
+        attrs={'autofocus':'',
+        'type':'tel',
+            'placeholder': 'Enter your Mobile...', 'id': 'hello',
+        'data-validate':"required minlength=5",
+        'data-role':"input",
+        'data-prepend':"<span class='mif-envelop'>",
+        }))
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'password1', 'password2', )
+        fields = ('first_name','last_name','username', 'password1', 'password2','mobile')
