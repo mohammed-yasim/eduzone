@@ -4,10 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+<!-- Google Fonts -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+<!-- Bootstrap core CSS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+<!-- Material Design Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.0/css/mdb.min.css" rel="stylesheet">
     <link href="{% static 'metro/css/metro-all.css' %}" rel="stylesheet">
 
-    <title>Login System KTUNSS</title>
+    <title>Login</title>
 
     <style>
         .login-form {
@@ -23,18 +29,15 @@
             }
     </style>
 </head>
-<body class="h-vh-100 bg-brandColor2">
-    <form class="login-form bg-white p-6 mx-auto border bd-default win-shadow"
-          data-role="validator"
-          action="javascript:"
-          data-clear-invalid="1000"
-          data-on-error-form="invalidForm"
-          data-on-validate-form="validateForm"
+<body class="blue-gradient">
+    <div class="row justify-content-center" style="min-height:100vh">
+    <div class="col-11 col-sm-10 col col-md-6 col-lg-4 m-auto">
+    <form class="bg-white p-6 mx-auto border bd-default win-shadow border-radius-10"
           method="post">
            {% csrf_token %}
            {% autoescape off %}
         <span class="mif-vpn-lock mif-4x place-right" style="margin-top: -10px;"></span>
-        <h2 class="text-light">Login to service</h2>
+        <h2 class="text-light">Login</h2>
          {{ form.non_field_errors }}
          
         <hr class="thin mt-4 mb-4 bg-white">
@@ -45,27 +48,14 @@
             {{ form.password }}
         </div>
         <div class="form-group mt-10">
-            <a href="/accounts/signup" class="place-right">No Account Signup</a>
+            <a href="/accounts/signup" class="place-right">Create a New Account</a>
             <button class="button">Login</button>
         </div>
         {% endautoescape %}
     </form>
-    <script src="{% static 'metro/js/metro.js' %}"></script>
-    <script>
-        function invalidForm(){
-            var form  = $(this);
-            form.addClass("ani-ring");
-            setTimeout(function(){
-                form.removeClass("ani-ring");
-            }, 1000);
-        }
+    </div>
+    </div>
 
-        function validateForm(){
-            $(".login-form").animate({
-                opacity: 0
-            }).attr("action","{{ app_path }}").submit();;
-        }
-    </script>
 
 </body>
 </html>

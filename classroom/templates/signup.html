@@ -1,40 +1,71 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-    <style>
-      form{
-        max-width: 400px;
-        margin: auto;
-      }
-    </style>
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<style>
+  body {
+    background-color: white;
+    font-size: 0.9rem;
+    min-height: 100vh;
+  }
+</style>
 
-</head>
-<body>
-  
-<form method="post">
-  
-<h2>Sign up Form</h2>
-  {% csrf_token %}
-  
-  {% for error in field.errors %}
-  <p style="color: red">{{ error }}</p>
-  {% endfor %}
-  <div>
-  {{ form.first_name }}
-  {{ form.last_name }}
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6 col-lg-6">
+      <!-- Default form register -->
+      <div class="card">
+        <div class="card-header heavy-rain-gradient  text-center">
+          <h2 class="card-title text-primary" style="font-family:Broadway; line-height: 50px;"><img class="img-fluid" width="50px" src="{% static 'logo512.png' %}"/> StudentsOnly.in</h2>
+        </div>
+
+        <div class="card-body cloudy-knoxville-gradient">
+          <h4>Sign up</h4>
+          <form method="POST">
+
+            {% for error in field.errors %}
+            <p style="color: red">{{ error }}</p>
+            {% endfor %}
+            {% csrf_token %}
+            <div class="form-row mb-4">
+              <div class="col">
+                <!-- First name -->
+                {{ form.first_name }}
+              </div>
+              <div class="col">
+                <!-- Last name -->
+                {{ form.last_name }}
+              </div>
+            </div>
+            {{ form.school }}
+            {{ form.username }}
+            {{ form.password1 }}
+            {{ form.password2 }}
+
+
+
+            {{ form.mobile }}
+
+
+            <!-- Sign up button -->
+            <button class="btn btn-danger my-1" type="submit">Sign up</button>
+
+
+            <hr>
+
+            <!-- Terms of service -->
+            <p style="font-size: 0.8rem;">By clicking
+              <em>Sign up</em> you agree to our
+              <a href="" target="_blank">terms of service</a>
+
+          </form>
+        </div>
+        <!-- Default form register -->
+      </div>
+    </div>
+  </div>
 </div>
-<div> {{ form.username }}</div>
 
-<div> {{ form.password1 }}</div>
-<div> {{ form.password2 }}</div>
-<div> {{ form.mobile }}</div>
-  <button type="submit">Sign up</button>
-</form>
-</body>
-</html>
+{% endblock content %}
 <!--
 {% for field in form %}
   <div>

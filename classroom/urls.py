@@ -6,7 +6,7 @@ from .forms import UserLoginForm
 
 from django.contrib.auth import views as auth_django
 
-from .views import home_view, signup_view
+from .views import home_view, signup_view,pview
 
 urlpatterns = [
     path('login/',
@@ -23,6 +23,11 @@ urlpatterns = [
         auth_django.PasswordChangeView.as_view(),
         name='fghfghjgh'
     ),
+    
+    path('profile/', home_view, name="home"),
     path('', home_view, name="home"),
-    path('signup/', signup_view, name="signup")
+    path('', home_view, name="home"),
+    path('signup/', signup_view, name="signup"),
+    path('samplepay/', pview,)
 ]
+
