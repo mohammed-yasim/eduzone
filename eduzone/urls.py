@@ -25,7 +25,7 @@ from studentsonly.views import index as mainpage,service,service2
 
 
 urlpatterns = [
-    url(r'^$',app),
+    path('',app),
     path('admin/', admin.site.urls),
     path('accounts/',include('classroom.urls')),
     path('console/',include('diya_api.urls')),
