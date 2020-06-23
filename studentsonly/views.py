@@ -1,5 +1,31 @@
-from django.shortcuts import render
-
+from django.shortcuts import render,HttpResponse
+import json
 # Create your views here.
+
+
 def index(request):
-    return render(request,"mainpage.html")
+    data = """
+    {
+    "short_name": "StudentsOnly",
+    "name": "StudentsOnly.in The learning App",
+    "start_url": ".",
+    "icons": [{
+        "src": "/app/favicon.ico",
+        "sizes": "48x48",
+        "type": "image/x-icon"
+    }, {
+        "src": "/app/android-chrome-192x192.png",
+        "sizes": "192x192",
+        "type": "image/png"
+    }, {
+        "src": "/app/android-chrome-512x512.png",
+        "sizes": "512x512",
+        "type": "image/png"
+    }],
+    "theme_color": "#BF3A3A",
+    "background_color": "#e0e0e0",
+    "display": "standalone"
+  }
+    """
+    datas = json.loads(data)
+    return HttpResponse(json.dumps(datas), content_type="application/json")
