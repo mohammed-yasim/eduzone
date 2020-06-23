@@ -31,7 +31,7 @@ urlpatterns = [
     url(r'classroom', app, name="home"),
     #url(r'classroom/(?P<path>.*)$', app, name="homess"),
     url(r'$^',app),
-    url(r'^index.html',app),
+    url(r'index.html',app),
     url(r'^manifest.json',mainpage),
     url(r'^site.webmanifest',mainpage),
     #url(r'^app/(?P<path>.*)$', serve,{'document_root': settings.MEDIA_ROOT}),
