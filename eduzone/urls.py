@@ -21,7 +21,7 @@ from django.conf.urls import url,include
 from django.views.static import serve 
 from django.views.generic import TemplateView
 from classroom.views import app
-from studentsonly.views import index as mainpage
+from studentsonly.views import index as mainpage,service,service2
 
 
 urlpatterns = [
@@ -34,6 +34,8 @@ urlpatterns = [
     url(r'index.html',app),
     url(r'^manifest.json',mainpage),
     url(r'^site.webmanifest',mainpage),
+    url(r'^service-worker.js',service),
+    path(r'precache-manifest.<query>.js',service2),
     #url(r'^app/(?P<path>.*)$', serve,{'document_root': settings.MEDIA_ROOT}),
     #url(r'^static/(?P<path>.*)$', serve,{'document_root': settings.STATIC_ROOT}), 
 ]

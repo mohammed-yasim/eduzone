@@ -1,15 +1,11 @@
 from django.shortcuts import render,HttpResponse
 import json
 # Create your views here.
-
-
 def index(request):
-    data = """
-    {
+    data = """{
     "short_name": "StudentsOnly",
     "name": "StudentsOnly.in The learning App",
-    "start_url": "/",
-    "scope": "/",
+    "start_url": ".",
     "icons": [{
         "src": "/app/favicon.ico",
         "sizes": "48x48",
@@ -30,3 +26,8 @@ def index(request):
     """
     datas = json.loads(data)
     return HttpResponse(json.dumps(datas), content_type="application/json")
+def service(request):
+    return render(request,'service-worker.js',content_type=" text/javascript")
+def service2(request,query='0'):
+    return render(request,'precache-manifest.%s.js'%(query),content_type=" text/javascript")
+    
