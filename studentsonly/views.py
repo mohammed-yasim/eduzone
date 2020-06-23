@@ -8,7 +8,8 @@ def index(request):
     {
     "short_name": "StudentsOnly",
     "name": "StudentsOnly.in The learning App",
-    "start_url": ".",
+    "start_url": "/",
+    "scope": "/",
     "icons": [{
         "src": "/app/favicon.ico",
         "sizes": "48x48",
