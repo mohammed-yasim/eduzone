@@ -25,12 +25,12 @@ from studentsonly.views import index as mainpage,service,service2
 
 
 urlpatterns = [
-    path('',app),
     path('admin/', admin.site.urls),
     path('accounts/',include('classroom.urls')),
     path('console/',include('diya_api.urls')),
     url(r'classroom', app, name="home"),
     #url(r'classroom/(?P<path>.*)$', app, name="homess"),
+    url(r'$^',app),
     url(r'index.html',app),
     url(r'^manifest.json',mainpage),
     url(r'^site.webmanifest',mainpage),
@@ -38,6 +38,5 @@ urlpatterns = [
     path(r'precache-manifest.<query>.js',service2),
     #url(r'^app/(?P<path>.*)$', serve,{'document_root': settings.MEDIA_ROOT}),
     #url(r'^static/(?P<path>.*)$', serve,{'document_root': settings.STATIC_ROOT}), 
-    
 ]
 urlpatterns+= static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
