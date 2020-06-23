@@ -30,7 +30,10 @@ workbox.core.clientsClaim();
  * requests for URLs in the manifest.
  * See https://goo.gl/S9QRab
  */
-self.__precacheManifest = [].concat(self.__precacheManifest || []);
-workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
+//self.__precacheManifest = [].concat(self.__precacheManifest || []);
+//workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
-workbox.routing.registerNavigationRoute(null);
+//workbox.routing.registerNavigationRoute(workbox.precaching.getCacheKeyForURL("/index.html"), {
+  
+//  blacklist: [/^\/_/,/\/[^/?]+\.[^/]+$/,/^\/api/,/^\/admin/,/^\/accounts/,/^\/pay/,],
+//});
