@@ -12,8 +12,8 @@ import ast
 
 
 def bypass(request):
-    #user = authenticate(username='yasim', password='yasim007')
-    #login(request, user)
+    user = authenticate(username='yasim', password='yasim007')
+    login(request, user)
     return True
 
 
@@ -79,7 +79,6 @@ def channel(request, name):
                     post_liste = serializers.serialize('json', queryset)
                     var_list = []
                     for data in json.loads(post_liste):
-                        print(data)
                         var_list.append(data['fields'])
                     json_template['data']['programmes'] = var_list
             except:
@@ -117,7 +116,6 @@ def programme(request, name, pgm):
                 for aa in queryset:
                     var_list += "{"
                     var_list += " 'name':'%s', " % (aa.name)
-                    var_list += " 'icon':'%s'," % (aa.name)
                     var_list += " 'playlist':[ "
                     count_width = 0
                     pagit = 1
@@ -133,8 +131,7 @@ def programme(request, name, pgm):
                             if(video.demo == True):
                                 var_list += " 'uri':'%s'," % (video.uri)
                             else:
-                                var_list += " 'uri':'/_pay?p=%s'," % (
-                                    q_programm.uid)
+                                var_list += " 'uri':'/_pay?p=%s'," % (q_programm.uid)
                             var_list += " 'demo':'%s'," % (video.demo)
                             var_list += "},"
                     if count_width > width:
@@ -149,13 +146,17 @@ def programme(request, name, pgm):
                 return HttpResponse(json.dumps(json_template), content_type="application/json")
             elif((queryset.count() >= 1 and q_programm.premium == False) or (queryset.count() >= 1 and purchased == True)):
                 var_list = "["
+                width = 0
                 for aa in queryset:
                     var_list += "{"
                     var_list += " 'name':'%s', " % (aa.name)
-                    var_list += " 'icon':'%s'," % (aa.name)
                     var_list += " 'playlist':[ "
-                    for video in aa.video.all():
+                    count_width = 0
+                    pagit = 1
+                    pagit = int(request.GET["p"])
+                    for video in aa.video.all().order_by('-id')[pagit*10-10:pagit*10]:
                         if(video.date < datetime.now()):
+                            count_width +=1
                             var_list += "{"
                             var_list += " 'name':'%s'," % (video.name)
                             var_list += " 'info':'%s'," % (video.info)
@@ -163,11 +164,14 @@ def programme(request, name, pgm):
                             var_list += " 'date':'%s'," % (video.date)
                             var_list += " 'uri':'%s'," % (video.uri)
                             var_list += "},"
+                    if count_width > width:
+                        width = count_width
                     var_list += "]"
                     var_list += "},"
                 var_list += "]"
                 res = ast.literal_eval(var_list)
                 json_template['data'] = res
+                json_template['width'] = width
                 return HttpResponse(json.dumps(json_template), content_type="application/json")
             else:
                 json_template['response'] = 404

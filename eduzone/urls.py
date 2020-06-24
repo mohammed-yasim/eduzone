@@ -28,6 +28,7 @@ urlpatterns = [
     path('_admin/', admin.site.urls),
     path('_accounts/',include('classroom.urls')),
     path('console/',include('diya_api.urls')),
+    path('_pay',app)
     url(r'^manifest.json',mainpage),
     url(r'^site.webmanifest',mainpage),
     url(r'^service-worker.js',service),
@@ -38,6 +39,5 @@ urlpatterns = [
     url(r'channel', app, name="home"),
     url(r'channel/(?P<path>.*)$', app, name="homess"),
     url(r'^$',app),
-    #blacklist: [/^\/_/,/\/[^/?]+\.[^/]+$/,/^\/api/,/^\/admin/,/^\/accounts/,/^\/pay/,],
 ]
 #urlpatterns+= static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
