@@ -12,8 +12,8 @@ import ast
 
 
 def bypass(request):
-    user = authenticate(username='yasim', password='yasim007')
-    login(request, user)
+    #user = authenticate(username='yasim', password='yasim007')
+    #login(request, user)
     return True
 
 
