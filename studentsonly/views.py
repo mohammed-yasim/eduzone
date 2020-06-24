@@ -27,7 +27,7 @@ def index(request):
     datas = json.loads(data)
     return HttpResponse(json.dumps(datas), content_type="application/json")
 def service(request):
-    return render(request,'service-worker.js',content_type=" text/javascript")
+    return render(request,'static/service-worker.js',content_type=" text/javascript")
 def service2(request,query='0'):
-    return render(request,'precache-manifest.%s.js'%(query),content_type=" text/javascript")
+    return render(request,'static/precache-manifest.%s.js'%(query),content_type=" text/javascript")
     

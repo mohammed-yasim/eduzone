@@ -4,9 +4,8 @@ from django.contrib.admin.views.decorators import staff_member_required
 import razorpay,json
 from uuid import uuid4
 
-@login_required(login_url="/accounts/login")
 def app(request,path=0):
-    return render(request,'index.html')
+    return render(request,'static/index.html')
 
 from django.shortcuts import render
 from django.contrib.auth import login, authenticate

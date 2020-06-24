@@ -83,7 +83,7 @@ class Video(models.Model):
 # Create your models here.
 class Categories(models.Model):
     name = models.CharField(_("Name"), max_length=50)
-    uri = models.CharField(_("URI"), max_length=50)
+    uri = models.CharField(_("URI"), max_length=50,unique=True)
     def __str__(self):
         return self.name
 
@@ -97,7 +97,7 @@ class Channel(models.Model):
     name = models.CharField(verbose_name="Name", max_length=50)
     info = models.TextField(verbose_name="Description")
     icon = models.ImageField(verbose_name="Logo",upload_to=path_and_rename_channel_thumb, null=True,blank=True,default="thumbnail_video.png")
-    uri = models.CharField(verbose_name="Uri", max_length=64)
+    uri = models.CharField(verbose_name="Uri", max_length=64,unique=True)
     pub = models.BooleanField(verbose_name="Published",default=True)
     active = models.BooleanField(verbose_name="Active",default=True)
     orderby = models.IntegerField(_("Order"),default=1000)
@@ -115,13 +115,13 @@ class Programme(models.Model):
     name = models.CharField(verbose_name="Name", max_length=50)
     info = models.TextField(verbose_name="Description")
     icon = models.ImageField(verbose_name="Thumbnail",upload_to=path_and_rename_pgm_thumb, null=True,blank=True,default="thumbnail_video.png")
-    uri = models.CharField(verbose_name="Uri", max_length=64)
+    uri = models.CharField(verbose_name="Uri", max_length=64,unique=True)
     channel = models.ForeignKey(Channel, verbose_name="Channel", on_delete=models.CASCADE)
     created = models.DateField(_("Created On"), auto_now=True)
     orderby = models.IntegerField(_("Order"),default=1000)
     custom_plan = models.BooleanField(_("Custom Plan"),default=False)
-    custom_plans = models.ManyToManyField(EduzonePlan, verbose_name="Custom Plans")
-    
+    custom_plans = models.ManyToManyField(EduzonePlan, verbose_name="Custom Plans",blank=True)
+    uid = models.CharField(_("ID"),default=uuid4, max_length=50)
     class Meta:
         verbose_name = '2. Class/Programme'
         verbose_name_plural = '2. Classes/Programmes'
@@ -130,7 +130,7 @@ class Programme(models.Model):
         return ("%s (%s)[%s]" %(self.channel.name,self.name,self.orderby))
 class Playlist(models.Model):
     name = models.CharField(verbose_name="Name", max_length=50)
-    uri = models.CharField(verbose_name="Uri", max_length=64)
+    uri = models.CharField(verbose_name="Uri", max_length=64,unique=True)
     programme = models.ForeignKey(Programme, verbose_name="Programme", on_delete=models.CASCADE)
     video = models.ManyToManyField(Video, verbose_name="Videos")
     orderby = models.IntegerField(_("Order"),default=1000)
@@ -140,6 +140,3 @@ class Playlist(models.Model):
         ordering = ['orderby']
     def __str__(self):
         return ("%s (%s - %s) [%s]" %(self.programme.channel.name,self.programme.name,self.name,self.orderby))
-
-
-
