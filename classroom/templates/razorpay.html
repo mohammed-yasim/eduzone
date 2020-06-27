@@ -1,0 +1,70 @@
+<html>
+<head lang="en"  class="no-js" oncontextmenu="return false;">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Payment</title>
+    <style>
+        #body {
+            width: 100%;
+            position: fixed;
+            max-width: 340px;
+            height:80vh;
+            background: white;
+            margin: auto auto auto auto;
+            top:0;left:0;right:0;bottom:0;
+            text-align: center;
+            padding: 10px;
+        }
+        .razorpay-payment-button,.razorpay-cancel-button-custom
+            {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  width: 90px;
+}
+.razorpay-cancel-button-custom{
+    background-color: #f44336;
+}
+    </style>
+</head>
+
+<body>
+    <div id="body">
+        <p>
+
+            <u> <b>Order confirmation</b> </u><br/>
+        </p>
+            <i>{{data.order.order}}</i>
+            <p style="text-align: justify; margin: 5px 5px 5px 5px;">
+            Dear <b> {{request.user.get_full_name }}</b>,<br/>
+            Your Order for <b>{{data.info}}</b> has successfully placed.<br/>
+            Please complete the Payment <br/>
+        </p>
+        <form action="/_accounts/order_payment_validate/" method="POST">
+            <script src="https://checkout.razorpay.com/v1/checkout.js" 
+            data-key="{{ data.key }}" 
+            data-amount="{{ data.order.razor_amount }}"
+            data-currency="INR" 
+            data-order_id="{{ data.order.razor_id }}" 
+            data-buttontext="Pay Now"
+            data-netbanking="true" 
+            data-name="StudentsOnly" 
+            data-description="{{data.info}}"
+            data-image="/static/logo512.png" 
+            data-prefill.name="{{request.user.get_full_name }}"
+            data-prefill.email="{{request.user.email }}" 
+            data-prefill.contact="{{request.user.profile.mobile }}"
+            data-theme.color="#F37254"></script>
+            {% csrf_token %}
+        </form>
+        <button onclick="window.close()" class="razorpay-cancel-button-custom">Cancel</button>
+        <img style="position:fixed;bottom:0;left:0;right:0; width:90%; max-width: 360px; margin:auto auto auto auto;" src="https://www.domainalliance.org/hosted/images/dd/1c52ee238641f3b461fa8c647be31a/3-logo-secure.png">
+    </div>
+</body>
+
+</html>

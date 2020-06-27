@@ -20,23 +20,34 @@ class EduzoneOrder(models.Model):
     razor_created = models.CharField(_("Razorpay created"),default=" ",max_length=50)
     paid = models.BooleanField(_("Amount Paid"),default=False)
     cancelled = models.BooleanField(_("Order Cancelled"),default=False)
+    def __str__(self):
+        return ("%s | %s_%s %s - %s:%s")%(self.razor_status,self.programme.channel.name,self.programme.name,self.plan,self.user.username,self.date)
 
 class EduzonePay(models.Model):
-    pay = models.CharField(_("Payment ID"),default=uuid4, max_length=50)
-    razor_pay=models.CharField(_("Payment ID"), max_length=128,blank=True)
-
-
-class SubscriberpaymentList(models.Model):
-    date = models.DateField(_("Date"), auto_now=False, auto_now_add=False)
-    eduzone_pay=models.CharField(_("Payment ID"), max_length=128,blank=True)
-    razor_pay=models.CharField(_("Payment ID"), max_length=128,blank=True)
-    order_id = models.CharField(_("Eduzone Order ID"),default=" ",max_length=128)
+    date = models.DateTimeField(_("Order Created"), auto_now=True)
+    pay = models.CharField(_("Payment ID"), max_length=50)
     razor_id = models.CharField(_("Razorpay Order ID"),default=" ",max_length=128)
-    plan = models.ForeignKey(EduzonePlan, verbose_name=_("Plan"), on_delete=models.CASCADE,related_name='subscriber')
-    programme = models.ForeignKey(Programme, verbose_name=_("Channel"), on_delete=models.CASCADE,related_name='subscriber')
+    razor_pay=models.CharField(_("Razorpay Payment ID"), max_length=128,blank=True)
+    razor_email = models.TextField(_("Rozor Email"),default="")
+    razor_mobile = models.TextField(_("Razor Mobile"),default="")
+    razor_amount = models.IntegerField(_("Razorpay Amount"),default=0)
+    razor_sign = models.TextField(_("Razor Sign"),default="")
+    razorpay_text = models.TextField(_("Rozorpay Text"),default="")
+
+
+class SubscriptionList(models.Model):
+    date = models.DateTimeField(_("Date"), auto_now=True,)
+    eduzone_order = models.CharField(_("Order ID"), max_length=128,blank=True)
+    razor_pay = models.CharField(_("Razorpay payment ID"),default=" ",max_length=128)
+    plan = models.ForeignKey(EduzonePlan, verbose_name=_("Plan"),on_delete=models.CASCADE,related_name='subscribers')
+    programme = models.ForeignKey(Programme, verbose_name=_("Channel"),on_delete=models.CASCADE,related_name='subscriber',)
     is_activated = models.BooleanField(_("Active"),default=True)
+    expiry = models.TextField(_("Plan Expiry"),default="0")
+    validity = models.IntegerField(_("Validity"),default=0)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='subscriptions')
     def __str__(self):
         return self.programme.name
+
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE,related_name='profile')
     mobile = models.CharField(_("Mobile No"), max_length=10,default="0")
@@ -44,7 +55,6 @@ class Profile(models.Model):
     bio = models.TextField(max_length=500, blank=True)
     location = models.CharField(max_length=30, blank=True)
     birth_date = models.DateField(null=True, blank=True)
-    subscribed = models.ManyToManyField(SubscriberpaymentList,related_name='subscribers')
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
@@ -54,3 +64,6 @@ def create_user_profile(sender, instance, created, **kwargs):
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
+
+
+

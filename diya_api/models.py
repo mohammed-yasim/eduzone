@@ -42,7 +42,9 @@ def path_and_rename_channel_thumb(instance, filename):
 class EduzonePlan(models.Model):
     custom = models.BooleanField(_("Custom Plan"),default=False)
     uid = models.CharField(_("ID"),default=uuid4, max_length=50)
+    active = models.BooleanField(_("Plan Active"),default=True)
     name = models.CharField(_("Plan"), max_length=50)
+    info = models.TextField(_("Plan info"),default=" ")
     validity = models.IntegerField(_("Validity"),default="90")
     price = models.IntegerField(_("Price :"),default=0)
     extra = models.IntegerField(_("Processing fee"),default=10)
@@ -116,7 +118,7 @@ class Programme(models.Model):
     info = models.TextField(verbose_name="Description")
     icon = models.ImageField(verbose_name="Thumbnail",upload_to=path_and_rename_pgm_thumb, null=True,blank=True,default="thumbnail_video.png")
     uri = models.CharField(verbose_name="Uri", max_length=64,unique=True)
-    channel = models.ForeignKey(Channel, verbose_name="Channel", on_delete=models.CASCADE)
+    channel = models.ForeignKey(Channel, verbose_name="Channel", on_delete=models.CASCADE,related_name='programme')
     created = models.DateField(_("Created On"), auto_now=True)
     orderby = models.IntegerField(_("Order"),default=1000)
     custom_plan = models.BooleanField(_("Custom Plan"),default=False)

@@ -9,7 +9,7 @@ from django.core import serializers
 from diya_api.models import Channel, Programme, Playlist, Client, Categories
 import json
 import ast
-
+from classroom.models import SubscriptionList as SList
 
 def bypass(request):
     #user = authenticate(username='yasim', password='yasim007')
@@ -67,14 +67,15 @@ def channel(request, name):
                          'status': 'OK', 'message': '', 'data': {}}
         try:
             q_channel = Channel.objects.get(uri=name)
+            #print(q_channel.programme.all())
             json_template['data']['name'] = q_channel.name
             if(q_channel.icon):
                 json_template['data']['icon'] = "%s" % (q_channel.icon)
-
             json_template['data']['uri'] = q_channel.uri
+            json_template['data']['info'] = q_channel.info
             json_template['data']['programmes'] = []
             try:
-                queryset = Programme.objects.filter(channel=q_channel)
+                queryset = q_channel.programme.all()#Programme.objects.filter(channel=q_channel)
                 if(queryset.count() >= 1):
                     post_liste = serializers.serialize('json', queryset)
                     var_list = []
@@ -109,7 +110,18 @@ def programme(request, name, pgm):
             enddate = datetime.now()
             queryset = Playlist.objects.filter(programme=q_programm)
             purchased = False
+            try:
+                activators = SList.objects.get(programme = q_programm,user = request.user,is_activated=True)
+                expiry = activators.date + timedelta(days=activators.validity)
+                if datetime.now() <= expiry :
+                    purchased = True
+                else:
+                    purchased = False
+            except Exception as e:
+                print(e)
+                purchased = False
             if(queryset.count() >= 1 and q_programm.premium == True and purchased == False):
+                start = datetime.now().timestamp() * 1000
                 json_template['demo'] = True
                 var_list = "["
                 width = 0
@@ -120,20 +132,19 @@ def programme(request, name, pgm):
                     count_width = 0
                     pagit = 1
                     pagit = int(request.GET["p"])
-                    for video in aa.video.all().order_by('-id')[pagit*10-10:pagit*10]:
-                        if(video.date < datetime.now()):
-                            count_width +=1
-                            var_list += "{"
-                            var_list += " 'name':'%s'," % (video.name)
-                            var_list += " 'info':'%s'," % (video.info)
-                            var_list += " 'icon':'%s'," % (video.icon)
-                            var_list += " 'date':'%s'," % (video.date)
-                            if(video.demo == True):
-                                var_list += " 'uri':'%s'," % (video.uri)
-                            else:
-                                var_list += " 'uri':'/_pay?p=%s'," % (q_programm.uid)
-                            var_list += " 'demo':'%s'," % (video.demo)
-                            var_list += "},"
+                    for video in aa.video.all().extra(where=['date<%s'],params=[datetime.now()]).order_by('-date')[pagit*10-10:pagit*10]:
+                        count_width +=1
+                        var_list += "{"
+                        var_list += " 'name':'%s'," % (video.name)
+                        var_list += " 'info':'%s'," % (video.info)
+                        var_list += " 'icon':'%s'," % (video.icon)
+                        var_list += " 'date':'%s'," % (video.date)
+                        if(video.demo == True):
+                            var_list += " 'uri':'%s'," % (video.uri)
+                        else:
+                            var_list += " 'uri':'/_pay?p=%s'," % (q_programm.uid)
+                        var_list += " 'demo':'%s'," % (video.demo)
+                        var_list += "},"
                     if count_width > width:
                         width = count_width
                     var_list += "]"
@@ -143,6 +154,8 @@ def programme(request, name, pgm):
                 res = ast.literal_eval(var_list)
                 json_template['data'] = res
                 json_template['width'] = width
+                loadingpagetime = datetime.now().timestamp() * 1000 - start
+                print(loadingpagetime)
                 return HttpResponse(json.dumps(json_template), content_type="application/json")
             elif((queryset.count() >= 1 and q_programm.premium == False) or (queryset.count() >= 1 and purchased == True)):
                 var_list = "["
@@ -154,16 +167,15 @@ def programme(request, name, pgm):
                     count_width = 0
                     pagit = 1
                     pagit = int(request.GET["p"])
-                    for video in aa.video.all().order_by('-id')[pagit*10-10:pagit*10]:
-                        if(video.date < datetime.now()):
-                            count_width +=1
-                            var_list += "{"
-                            var_list += " 'name':'%s'," % (video.name)
-                            var_list += " 'info':'%s'," % (video.info)
-                            var_list += " 'icon':'%s'," % (video.icon)
-                            var_list += " 'date':'%s'," % (video.date)
-                            var_list += " 'uri':'%s'," % (video.uri)
-                            var_list += "},"
+                    for video in aa.video.all().extra(where=['date<%s'],params=[datetime.now()]).order_by('-date')[pagit*10-10:pagit*10]:
+                        count_width +=1
+                        var_list += "{"
+                        var_list += " 'name':'%s'," % (video.name)
+                        var_list += " 'info':'%s'," % (video.info)
+                        var_list += " 'icon':'%s'," % (video.icon)
+                        var_list += " 'date':'%s'," % (video.date)
+                        var_list += " 'uri':'%s'," % (video.uri)
+                        var_list += "},"
                     if count_width > width:
                         width = count_width
                     var_list += "]"

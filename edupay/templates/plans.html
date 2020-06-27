@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+{% block head %}
+<META HTTP-EQUIV="PRAGMA" CONTENT="NO-CACHE">
+<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
+    <META HTTP-EQUIV="REFRESH"
+CONTENT="100;">
+<title>Plans and Pricing</title>
+{% endblock head %}
+{% block content %}
+<style>
+    body {
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+</style>
+<div class="container-fluid my-5 px-2 ">
+
+    <!--Section: Content-->
+    <section class="card text-center dark-text light-bg lighten-2">
+        <div class="card-header text-left">
+            <img class="img-fluid w-100" style="max-width: 300px;"
+                src="data:image/png;base64,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" />
+        </div>
+        <div class="card-body pt-2 px-lg-5">
+            <div class="text-left">
+                <table class="table table-sm table-bordered table-stripedk">
+                    <thead>
+                        <tr>
+                            <th colspan="2"><b>Subscription for {{data.program.channel.name}} - {{data.program.name }}
+                                </b></th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-center">
+                        <tr>
+
+                            <th width="30%">Name</th>
+                            <td> {{request.user.get_full_name }}({{request.user.username}})</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Email</th>
+                            <td>{{request.user.email }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Mobile</th>
+                            <td>{{request.user.profile.mobile}} </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+            <!-- Section heading -->
+            <h3 class="font-weight-bold mt-3 mb-4 pb-2">Choose your pricing plan</h3>
+
+            <!-- Grid row -->
+            <div class="row mb-5">
+                {% for plan in data.temp_plans %}
+
+                <!-- Grid column -->
+                <div class="col-lg-4 col-md-6 mb-4">
+
+                    <!-- Card -->
+                    <div class="pricing-card z-depth-1 bg-primary white-text">
+
+                        <!-- Content -->
+                        <div class="card-body">
+
+                            <!-- Price -->
+                            <p class="display-3"><span
+                                    class="h5 font-weight-normal pr-2">&#8377;</span>{{plan.price|add:plan.gst|add:plan.extra}}
+                            </p>
+
+                            <h5 class="text-uppercase font-weight-normal mb-4"> {{plan.name}} Plan </h5>
+
+                            <p class="mb-2">{{ plan.info }}</p>
+                            <p class="mb-2 pb-2">Validity : {{plan.validity}} Days</p>
+                            <form method="POST" action="/_pay/makeorder">
+                                {% csrf_token %}
+                                <input type="hidden" name="p" value="{{ data.program.uid }}">
+                                <input type="hidden" name="plan" value="{{plan.uid}}">
+                                <button class="btn btn-danger btn-md btn-rounded  btn-block"><i
+                                        class="fa fa-shopping-basket" aria-hidden="true"></i> Order</button>
+                            </form>
+                        </div>
+                        <!-- Content -->
+
+                    </div>
+                    <!-- Card -->
+
+                </div>
+                <!-- Grid column -->
+
+                {% endfor %}
+                {% for plan in data.plans%}
+
+                <!-- Grid column -->
+                <div class="col-lg-4 col-md-6 mb-4">
+
+                    <!-- Card -->
+                    <div class="pricing-card z-depth-1 bg-info white-text">
+
+                        <!-- Content -->
+                        <div class="card-body">
+
+                            <!-- Price -->
+                            <p class="display-3"><span
+                                    class="h5 font-weight-normal pr-2">&#8377;</span>{{plan.price|add:plan.gst|add:plan.extra}}
+                            </p>
+
+                            <h5 class="text-uppercase font-weight-normal mb-4"> {{plan.name}} Plan </h5>
+                            <p class="mb-2">{{ plan.info }}</p>
+                            <p class="mb-2 pb-2">Validity : {{plan.validity}} Days</p>
+                            <form method="POST" action="/_pay/makeorder">
+                                {% csrf_token %}
+                                <input type="hidden" name="p" value="{{ data.program.uid }}">
+                                <input type="hidden" name="plan" value="{{plan.uid}}">
+                                <button class="btn btn-danger btn-md btn-rounded  btn-block"><i
+                                        class="fa fa-shopping-basket" aria-hidden="true"></i> Order</button>
+                            </form>
+
+                        </div>
+                        <!-- Content -->
+
+                    </div>
+                    <!-- Card -->
+
+                </div>
+                <!-- Grid column -->
+
+                {% endfor %}
+
+            </div>
+            <!-- Grid row -->
+            <p class="text-center"><a href="javascript:window.close()" class="btn btn-sm btn-danger">Cancel</a>
+            </p>
+        </div>
+        <div class="card-footer"> Note : Payment includes Processing fee + GST</div>
+    </section>
+    <!--Section: Content-->
+
+</div>
+{% endblock %}

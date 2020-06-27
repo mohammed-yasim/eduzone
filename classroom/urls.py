@@ -6,16 +6,16 @@ from .forms import UserLoginForm
 
 from django.contrib.auth import views as auth_django
 
-from .views import home_view, signup_view,pview
+from .views import home_view, signup_view,payment_check
 
 urlpatterns = [
     path('login/',
-        auth_django.LoginView.as_view(authentication_form=UserLoginForm,template_name = 'registration/login.html'),
+        auth_django.LoginView.as_view(authentication_form=UserLoginForm,template_name = 'custom_login.html'),
         name='fghfgh'
     ),
     path(
         'logout/',
-        auth_django.LogoutView.as_view(template_name = 'registration/exit.html'),
+        auth_django.LogoutView.as_view(template_name = 'custom_exit.html'),
         name='fghfghjgh'
     ),
     path(
@@ -28,6 +28,6 @@ urlpatterns = [
     path('', home_view, name="home"),
     path('', home_view, name="home"),
     path('signup/', signup_view, name="signup"),
-    path('samplepay/', pview,)
+    path('order_payment_validate/', payment_check),
 ]
 

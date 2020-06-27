@@ -11,20 +11,18 @@
 
 <div class="container mt-5">
   <div class="row justify-content-center">
-    <div class="col-md-6 col-lg-6">
+    <div class="col-md-10 col-lg-6">
       <!-- Default form register -->
       <div class="card">
         <div class="card-header heavy-rain-gradient  text-center">
-          <h2 class="card-title text-primary" style="font-family:Broadway; line-height: 50px;"><img class="img-fluid" width="50px" src="{% static 'logo512.png' %}"/> StudentsOnly.in</h2>
+          <h2 class="card-title text-primary" style="font-family:Broadway; line-height: 50px;"><img class="img-fluid"
+              width="50px" src="{% static 'logo512.png' %}" /> StudentsOnly.in</h2>
         </div>
 
         <div class="card-body cloudy-knoxville-gradient">
           <h4>Sign up</h4>
           <form method="POST">
-
-            {% for error in field.errors %}
-            <p style="color: red">{{ error }}</p>
-            {% endfor %}
+            {% autoescape off %}
             {% csrf_token %}
             <div class="form-row mb-4">
               <div class="col">
@@ -36,11 +34,38 @@
                 {{ form.last_name }}
               </div>
             </div>
-            {{ form.school }}
-            {{ form.username }}
-            {{ form.password1 }}
-            {{ form.password2 }}
 
+            {{ form.school }}
+
+            <div class="mb-3">
+             <span class="text-danger">
+                  {% for error in form.username.errors %}
+                  {{ error }} <br>
+                  {% endfor %}
+                </span>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroupPrepend">@</span>
+                </div>
+                {{ form.username }}
+              </div>
+
+            </div>
+
+
+
+            {{ form.password1 }}
+            <span class="text-danger">
+                  {% for error in form.password1.errors %}
+                  {{ error }} <br>
+                  {% endfor %}
+                </span>
+            {{ form.password2 }}
+<span class="text-danger">
+                  {% for error in form.password2.errors %}
+                  {{ error }} <br>
+                  {% endfor %}
+                </span>
 
 
             {{ form.mobile }}
@@ -57,6 +82,7 @@
               <em>Sign up</em> you agree to our
               <a href="" target="_blank">terms of service</a>
 
+              {% endautoescape %}
           </form>
         </div>
         <!-- Default form register -->

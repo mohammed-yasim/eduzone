@@ -28,7 +28,7 @@ urlpatterns = [
     path('_admin/', admin.site.urls),
     path('_accounts/',include('classroom.urls')),
     path('console/',include('diya_api.urls')),
-    path('_pay',app),
+    path('_pay/',include('edupay.urls')),
     url(r'^manifest.json',mainpage),
     url(r'^site.webmanifest',mainpage),
     url(r'^service-worker.js',service),

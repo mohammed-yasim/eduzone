@@ -12,7 +12,7 @@ SECRET_KEY = '+#_#+s+9n&#gy*m1q6=o%#pc%rge9qg0q0@sp04tt$q8!m^-ts'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['eduzonelearning.pythonanywhere.com', '*']
+ALLOWED_HOSTS = ['app.studentsonly.in', '*']
 
 
 # Application definition
@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'infox_controller',
+    'edupay',
     'classroom',
     'diya_api',
     'studentsonly',
@@ -108,7 +109,6 @@ AUTH_PASSWORD_VALIDATORS = [
     #    'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     # },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
         'OPTIONS': {
             'min_length': 6,
