@@ -11,6 +11,7 @@ import json
 import ast
 from classroom.models import SubscriptionList as SList
 
+
 def bypass(request):
     #user = authenticate(username='yasim', password='yasim007')
     #login(request, user)
@@ -26,29 +27,29 @@ def channels(request):
     if request.user.is_authenticated:
         json_template = {'response': 200, 'status': 'success',
                          'message': '', 'data': [], 'catfilter': []}
-        filterset = Categories.objects.all()
+        filterset = Categories.objects.values_list('name','uri', named=True)
         if (filterset.count() >= 1):
-            filter_list = "["
+            filter_list = """["""
             for filters in filterset:
-                filter_list += "{"
-                filter_list += " 'name':'%s', " % (filters.name)
-                filter_list += " 'uri':'%s', " % (filters.uri)
-                filter_list += "},"
-            filter_list += "]"
+                filter_list += """{"""
+                filter_list += """ "name":"%s", """ % (filters.name)
+                filter_list += """ "uri":"%s", """ % (filters.uri)
+                filter_list += """},"""
+            filter_list += """]"""
             filter_listres = ast.literal_eval(filter_list)
             json_template['catfilter'] = filter_listres
-        queryset = Channel.objects.filter(pub=True, active=True)
+        queryset = Channel.objects.filter(pub=True,active=True,enterprize = False)
         if(queryset.count() >= 1):
-            var_list = "["
+            var_list = """["""
             for channel in queryset:
-                var_list += "{"
-                var_list += " 'name':'%s', " % (channel.name)
-                var_list += " 'icon':'%s'," % (channel.icon)
-                var_list += " 'info':'%s'," % (channel.info)
-                var_list += " 'uri':'%s'," % (channel.uri)
-                var_list += " 'category':'%s'," % (channel.category.uri)
-                var_list += "},"
-            var_list += "]"
+                var_list += """{"""
+                var_list += """ "name":"%s", """ % (channel.name)
+                var_list += """ "icon":"%s",""" % (channel.icon)
+                var_list += """ "info":"%s",""" % (channel.info)
+                var_list += """ "uri":"%s",""" % (channel.uri)
+                var_list += """ "category":"%s",""" % (channel.category.uri)
+                var_list += """},"""
+            var_list += """]"""
             res = ast.literal_eval(var_list)
             json_template['data'] = res
             loadingpagetime = datetime.now().timestamp() * 1000 - start
@@ -66,8 +67,8 @@ def channel(request, name):
         json_template = {'response': 200,
                          'status': 'OK', 'message': '', 'data': {}}
         try:
-            q_channel = Channel.objects.get(uri=name)
-            #print(q_channel.programme.all())
+            q_channel = Channel.objects.get(uri=name,pub=True,active=True,enterprize = False)
+            # print(q_channel.programme.all())
             json_template['data']['name'] = q_channel.name
             if(q_channel.icon):
                 json_template['data']['icon'] = "%s" % (q_channel.icon)
@@ -75,7 +76,8 @@ def channel(request, name):
             json_template['data']['info'] = q_channel.info
             json_template['data']['programmes'] = []
             try:
-                queryset = q_channel.programme.all()#Programme.objects.filter(channel=q_channel)
+                # Programme.objects.filter(channel=q_channel)
+                queryset = q_channel.programme.all()
                 if(queryset.count() >= 1):
                     post_liste = serializers.serialize('json', queryset)
                     var_list = []
@@ -104,16 +106,17 @@ def programme(request, name, pgm):
     try:
         if request.user.is_authenticated:
             json_template = {'response': 200,
-                         'status': 'success', 'message': '', 'data': []}
+                             'status': 'OK', 'message': '', 'data': []}
             q_channel = Channel.objects.get(uri=name)
             q_programm = Programme.objects.get(uri=pgm, channel=q_channel)
             enddate = datetime.now()
             queryset = Playlist.objects.filter(programme=q_programm)
             purchased = False
             try:
-                activators = SList.objects.get(programme = q_programm,user = request.user,is_activated=True)
+                activators = SList.objects.get(
+                    programme=q_programm, user=request.user, is_activated=True)
                 expiry = activators.date + timedelta(days=activators.validity)
-                if datetime.now() <= expiry :
+                if datetime.now() <= expiry:
                     purchased = True
                 else:
                     purchased = False
@@ -123,34 +126,36 @@ def programme(request, name, pgm):
             if(queryset.count() >= 1 and q_programm.premium == True and purchased == False):
                 start = datetime.now().timestamp() * 1000
                 json_template['demo'] = True
-                var_list = "["
+                var_list = """["""
                 width = 0
                 for aa in queryset:
-                    var_list += "{"
-                    var_list += " 'name':'%s', " % (aa.name)
-                    var_list += " 'playlist':[ "
+                    var_list += """{"""
+                    var_list += """ "name":"%s", """ % (aa.name)
+                    var_list += """ "playlist":[ """
                     count_width = 0
                     pagit = 1
                     pagit = int(request.GET["p"])
-                    for video in aa.video.all().extra(where=['date<%s'],params=[datetime.now()]).order_by('-date')[pagit*10-10:pagit*10]:
-                        count_width +=1
-                        var_list += "{"
-                        var_list += " 'name':'%s'," % (video.name)
-                        var_list += " 'info':'%s'," % (video.info)
-                        var_list += " 'icon':'%s'," % (video.icon)
-                        var_list += " 'date':'%s'," % (video.date)
+                    for video in aa.video.all().extra(where=['date<%s'], params=[datetime.now()]).order_by('-date')[pagit*10-10:pagit*10]:
+                        count_width += 1
+                        var_list += """{"""
+                        var_list += """ "name":"%s",""" % (video.name)
+                        var_list += """ "uid":"%s",""" % (video.uid)
+                        var_list += """ "info":"%s",""" % (video.info)
+                        var_list += """ "icon":"%s",""" % (video.icon)
+                        var_list += """ "date":"%s",""" % (video.date)
                         if(video.demo == True):
-                            var_list += " 'uri':'%s'," % (video.uri)
+                            var_list += """ "uri":"%s",""" % (video.uri)
                         else:
-                            var_list += " 'uri':'/_pay?p=%s'," % (q_programm.uid)
-                        var_list += " 'demo':'%s'," % (video.demo)
-                        var_list += "},"
+                            var_list += """ "uri":"/_pay?p=%s",""" % (
+                                q_programm.uid)
+                        var_list += """ "demo":"%s",""" % (video.demo)
+                        var_list += """},"""
                     if count_width > width:
                         width = count_width
-                    var_list += "]"
-                    var_list += "},"
-                print("final : ",width)
-                var_list += "]"
+                    var_list += """]"""
+                    var_list += """},"""
+                print("final : ", width)
+                var_list += """]"""
                 res = ast.literal_eval(var_list)
                 json_template['data'] = res
                 json_template['width'] = width
@@ -158,29 +163,30 @@ def programme(request, name, pgm):
                 print(loadingpagetime)
                 return HttpResponse(json.dumps(json_template), content_type="application/json")
             elif((queryset.count() >= 1 and q_programm.premium == False) or (queryset.count() >= 1 and purchased == True)):
-                var_list = "["
+                var_list = """["""
                 width = 0
                 for aa in queryset:
-                    var_list += "{"
-                    var_list += " 'name':'%s', " % (aa.name)
-                    var_list += " 'playlist':[ "
+                    var_list += """{"""
+                    var_list += """ "name":"%s", """ % (aa.name)
+                    var_list += """ "playlist":[ """
                     count_width = 0
                     pagit = 1
                     pagit = int(request.GET["p"])
-                    for video in aa.video.all().extra(where=['date<%s'],params=[datetime.now()]).order_by('-date')[pagit*10-10:pagit*10]:
-                        count_width +=1
-                        var_list += "{"
-                        var_list += " 'name':'%s'," % (video.name)
-                        var_list += " 'info':'%s'," % (video.info)
-                        var_list += " 'icon':'%s'," % (video.icon)
-                        var_list += " 'date':'%s'," % (video.date)
-                        var_list += " 'uri':'%s'," % (video.uri)
-                        var_list += "},"
+                    for video in aa.video.all().extra(where=['date<%s'], params=[datetime.now()]).order_by('-date')[pagit*10-10:pagit*10]:
+                        count_width += 1
+                        var_list += """{"""
+                        var_list += """ "name":"%s",""" % (video.name)
+                        var_list += """ "uid":"%s",""" % (video.uid)
+                        var_list += """ "info":"%s",""" % (video.info)
+                        var_list += """ "icon":"%s",""" % (video.icon)
+                        var_list += """ "date":"%s",""" % (video.date)
+                        var_list += """ "uri":"%s",""" % (video.uri)
+                        var_list += """},"""
                     if count_width > width:
                         width = count_width
-                    var_list += "]"
-                    var_list += "},"
-                var_list += "]"
+                    var_list += """]"""
+                    var_list += """},"""
+                var_list += """]"""
                 res = ast.literal_eval(var_list)
                 json_template['data'] = res
                 json_template['width'] = width
@@ -198,4 +204,3 @@ def programme(request, name, pgm):
         json_template['status'] = 'Not OK'
         json_template['message'] = '%s' % (e)
         return HttpResponse(json.dumps(json_template), content_type="application/json")
-

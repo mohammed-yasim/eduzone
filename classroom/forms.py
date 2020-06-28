@@ -21,19 +21,19 @@ class UserLoginForm(AuthenticationForm):
 
     username = forms.CharField(widget=forms.TextInput(
         attrs={'autofocus': '',
-               'placeholder': 'Enter Username...', 'id': 'hello',
-               'data-validate': "required minlength=5",
-               'data-role': "input",
-               'data-prepend': "<span class='mif-envelop'>"
+                'type':'email',
+                'required':'',
+               'placeholder': 'Enter Email...',
+               'id': 'hello',
+
                }))
     password = forms.CharField(widget=forms.PasswordInput(
         attrs={
             'class': 'form-control',
             'placeholder': 'Enter Password...',
             'id': 'hi',
-            'data-validate': "required minlength=6",
-            'data-role': "input",
-            'data-prepend': "<span class='mif-key'>"
+            'required':''
+            
         }
     ))
 
@@ -59,6 +59,7 @@ class SignUpForm(UserCreationForm):
             'placeholder': "First name",
             'required': '',
             'pattern':".{4,}",
+            'title':'minimum 4 letters'
         }))
     last_name = forms.CharField(max_length=30, widget=forms.TextInput(
         attrs={
@@ -76,16 +77,16 @@ class SignUpForm(UserCreationForm):
             'placeholder': "School/institution Address",
             'required': '',
             'pattern':".{10,}",
+            'title':'minimum 10 letters',
         }))
     username = forms.CharField(max_length=30, widget=forms.TextInput(
         attrs={
-            'type': "username",
+            'type': "email",
             'id': "validationCustomUsername",
             'class': "form-control",
-            'placeholder': "Username",
+            'placeholder': "Email",
             'required': '',
-            'pattern':".{6,}",
-            'title':'username must be 6 letters'
+            'title':'Enter a valid email'
         }))
     password1 = forms.CharField(max_length=30, widget=forms.TextInput(
         attrs={
@@ -94,7 +95,8 @@ class SignUpForm(UserCreationForm):
             'class': "form-control mb-4",
             'placeholder': "Password",
             'pattern':".{6,}",
-            'required': ''
+            'required': '',
+            'title':'password must be more than 6 characters',
         }))
     password2 = forms.CharField(max_length=30, widget=forms.TextInput(
         attrs={
@@ -103,8 +105,10 @@ class SignUpForm(UserCreationForm):
             'class': "form-control mb-4",
             'placeholder': "Confirm Password",
             'pattern':".{6,}",
-            'required': ''
+            'required': '',
+            'title':'password must be more than 6 characters',
         }))
+    
     mobile = forms.CharField(max_length=10, widget=forms.TextInput(
         attrs={
             'type': "tel",

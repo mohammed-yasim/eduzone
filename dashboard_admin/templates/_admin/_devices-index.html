@@ -1,0 +1,50 @@
+{% extends 'official_admin/oa_base.html' %}
+{% load qr_code %}
+{% block title %} Call Center Devices {% endblock title %}
+{% block app_title %} All Devices{% endblock app_title %}
+{% block breadcrumbs %}
+<li class="breadcrumb-item">Devices</li>
+{% endblock breadcrumbs %}
+{% block content %}
+<div class="row">
+
+    {% for device in datas.devices %}
+    <div class="col-md-4">
+        <div class="card card-warning">
+            <div class="card-header">{{device.call_center_name}}<div class="float-right custom-control custom-switch">
+                        <input type="checkbox" onchange="alert(0)" {% if device.call_center_status %}checked disabled
+                            {% else %} disabled {% endif %} class="custom-control-input"
+                            id="CS{{device.call_center_key}}">
+                        <label class="custom-control-label"
+                            for="CS{{device.call_center_key}}">{% if device.call_center_status %}Enabled {% else %}
+                            Disabled{% endif %}</label>
+                    </div></div>
+            <div class="card-body">
+
+                <div class="form-group">
+                    {{device.call_center_administator}}
+                    <br />
+                   
+                </div>
+                <div class="text-left"><div class="form-group">
+                                <label for="call_center_key{{device.call_center_key}}">API Key</label><a href="javascript:$('#call_center_key{{device.call_center_key}}').select();document.execCommand('copy');" class="btn btn-link"> copy</a>
+                                <input type="text" name="call_center_key" class="form-control" id="call_center_key{{device.call_center_key}}" readonly
+                                    value="{{device.call_center_key}}" onclick="this.select();this.setSelectionRange(0, 99999);document.execCommand('copy');" required>
+                            </div>
+                                                {% qr_from_text device.call_center_key size="8" border=0 image_format="svg" error_correction="L" %}
+                </div>
+            </div>
+            <div class="card-footer">
+                Authority : {{device.official_user}}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    <div class="col-md-3">
+        <a class="btn btn-success" href="/official_admin/devices/add"><i class="fa fa-plus"></i>Add new<a>
+    </div>
+</div>
+{% endblock content %}
+{% block script %}
+
+{% endblock script %}

@@ -3,19 +3,19 @@ import json
 # Create your views here.
 def index(request):
     data = """{
-    "short_name": "StudentsOnly",
+    "short_name": "StudentsOnly.in",
     "name": "StudentsOnly.in The learning App",
     "start_url": ".",
     "icons": [{
-        "src": "/app/favicon.ico",
+        "src": "/static/favicon.ico",
         "sizes": "48x48",
         "type": "image/x-icon"
     }, {
-        "src": "/app/android-chrome-192x192.png",
+        "src": "/static/android-chrome-192x192.png",
         "sizes": "192x192",
         "type": "image/png"
     }, {
-        "src": "/app/android-chrome-512x512.png",
+        "src": "/static/android-chrome-512x512.png",
         "sizes": "512x512",
         "type": "image/png"
     }],

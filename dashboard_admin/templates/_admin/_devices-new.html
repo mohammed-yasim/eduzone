@@ -1,0 +1,74 @@
+{% extends 'official_admin/oa_base.html' %}
+{% block title %} Call Center Devices {% endblock title %}
+{% block app_title %} Add new Device{% endblock app_title %}
+{% block breadcrumbs %}
+
+<li class="breadcrumb-item"><a href="/official_admin/devices/">Devices</a></li>
+<li class="breadcrumb-item">New</li>
+{% endblock breadcrumbs %}
+{% block content %}
+
+
+<div class="row justify-content-center">
+    <div class="col-sm-10">
+        <div class="card card-info shadow ">
+            <div class="card-header">
+                <div class="card-title">Add New Device</div>
+            </div>
+            <form method="post" action="add.infox">
+                {% csrf_token %}
+                <div class="card-body">
+                {% if datas.error is not None%}
+                <div class="alert alert-danger">{{datas.error}}</div>
+                {% endif %}
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="call_center_administator">Administrator Name</label>
+                                <input type="text" class="form-control" name="call_center_administator" id="call_center_administator"
+                                    placeholder="Enter Administrator Name"   title="Enter Administrator Name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="call_center_name">Device Name</label>
+                                <input type="text" class="form-control" name="call_center_name" id="call_center_name"
+                                  title="Enter Call center Name"  placeholder="Enter Call center Name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="call_center">Device Number</label>
+                                <input type="tel" class="form-control" name="call_center" id="call_center"
+                                   title="Enter Call Center Number"   placeholder="Enter Call Center Number" required>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="call_center_key">Device API Key</label><a href="javascript:$('#call_center_key').select();document.execCommand('copy');" class="btn btn-link"> copy</a>
+                                <input type="text" name="call_center_key" class="form-control" id="call_center_key" readonly
+                                    value="{{datas.apikey}}" onclick="this.select();this.setSelectionRange(0, 99999);document.execCommand('copy');" required>
+                            
+                            </div>
+                            <div class="form-group text-center">
+                                {% load qr_code %}
+                                {% qr_from_text datas.apikey size="s" border=1 image_format="svg" error_correction="L" %}
+
+
+                            </div>
+        
+                        </div>
+                    </div>
+                    <input type="submit" value="Save" class="btn btn-info">
+                </div>
+            </form>
+            <div class="card-footer">
+            
+                    <p class="text-center"> API URL <code>
+                            {{ request.scheme }}://{{ request.META.HTTP_HOST }}/console/service</code></p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+{% block script %}
+
+{% endblock script %}

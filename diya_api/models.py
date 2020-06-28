@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django.contrib.auth.models import User
 from uuid import uuid4
 import os
 def path_and_rename_videothumb(instance, filename):
@@ -56,15 +57,18 @@ class EduzonePlan(models.Model):
         return ("%s - (Rs %s/%s Days)" %(self.name,self.price+self.extra+self.gst,self.validity))
 
 class Client(models.Model):
+    enterprize = models.BooleanField(_("Enterprize User"),default=False)
+    quota = models.IntegerField(_("Enterprize Quota"),default=0)
     uid = models.TextField(verbose_name="Channel",default=uuid4,editable=False)
     fname = models.CharField(verbose_name="First name", max_length=32)
     lname = models.CharField(verbose_name="Last name", max_length=32)
     add_1 = models.CharField(verbose_name="Address Line 1", max_length=50,default='0')
     add_2 = models.CharField(verbose_name="Address Line 2", max_length=50,default='0')
     email = models.EmailField(verbose_name="Email", max_length=254)
-    mobile = models.IntegerField(verbose_name="Mobile Number",default=0)
+    mobile = models.CharField(verbose_name="Mobile Number",default=0,max_length=10)
+    user = models.OneToOneField(User, verbose_name=_("Staff Account"), on_delete=models.CASCADE,blank=True,null=True,related_name='client')
     def __str__(self):
-        return ("%s (%s)" %(self.fname+self.lname,self.mobile))
+        return ("%s (%s)(%s) " %(self.fname+self.lname,self.mobile,self.email))
 
 class Video(models.Model):
     name = models.CharField(verbose_name="Name", max_length=50)
@@ -75,9 +79,10 @@ class Video(models.Model):
     uid = models.TextField(verbose_name="Channel",default=uuid4,editable=False)
     banned = models.BooleanField(_("Content Banned"),default=False)
     demo = models.BooleanField(_("Demo Video (Sample)"),default=False)
+    client = models.ForeignKey(Client, verbose_name=_("Owner"), on_delete=models.CASCADE,null=True,blank=True,related_name='videos')
     class Meta:
-        verbose_name = '4. Video/Topic/Lesson'
-        verbose_name_plural = '4. Videos/Topics/Lesson'
+        verbose_name = 'Video/Topic/Lesson'
+        verbose_name_plural = 'Videos/Topics/Lesson'
         ordering = ['-date']
     def __str__(self):
         return ("%s (%s)" %(self.name,self.info))
@@ -96,15 +101,17 @@ class Categories(models.Model):
 
 
 class Channel(models.Model):
+    enterprize = models.BooleanField(_("Enterprize Edition"),default=False)
+    e_host = models.CharField(_("Enterprize Host"),default="app.studentsonly.in",max_length=64)
     name = models.CharField(verbose_name="Name", max_length=50)
     info = models.TextField(verbose_name="Description")
     icon = models.ImageField(verbose_name="Logo",upload_to=path_and_rename_channel_thumb, null=True,blank=True,default="thumbnail_video.png")
     uri = models.CharField(verbose_name="Uri", max_length=64,unique=True)
-    pub = models.BooleanField(verbose_name="Published",default=True)
+    pub = models.BooleanField(verbose_name="Published Public",default=True)
     active = models.BooleanField(verbose_name="Active",default=True)
     orderby = models.IntegerField(_("Order"),default=1000)
     category = models.ForeignKey(Categories, verbose_name="Category", related_name='channels', on_delete=models.CASCADE)
-    who = models.ForeignKey(Client, verbose_name="Owner", related_name='channels', on_delete=models.CASCADE)
+    who = models.ForeignKey(Client, verbose_name="Owner/Client", related_name='channels', on_delete=models.CASCADE)
     class Meta:
         verbose_name = '1. Channel & School'
         verbose_name_plural = '1. Channels & Schools'
@@ -112,6 +119,7 @@ class Channel(models.Model):
 
     def __str__(self):
         return ("%s (%s)[%s]" %(self.name,self.who,self.orderby))
+
 class Programme(models.Model):
     premium = models.BooleanField(_("Premium"),default=False)
     name = models.CharField(verbose_name="Name", max_length=50)

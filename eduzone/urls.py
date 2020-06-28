@@ -25,10 +25,11 @@ from studentsonly.views import index as mainpage,service,service2
 
 
 urlpatterns = [
-    path('_admin/', admin.site.urls),
+    path('_infox/', admin.site.urls),
     path('_accounts/',include('classroom.urls')),
     path('console/',include('diya_api.urls')),
     path('_pay/',include('edupay.urls')),
+    path('_admin/',include('dashboard_admin.urls')),
     url(r'^manifest.json',mainpage),
     url(r'^site.webmanifest',mainpage),
     url(r'^service-worker.js',service),
@@ -36,8 +37,8 @@ urlpatterns = [
     #url(r'^media/(?P<path>.*)$', serve,{'document_root': settings.MEDIA_ROOT}),
     #url(r'^static/(?P<path>.*)$', serve,{'document_root': settings.STATIC_ROOT}), 
     url(r'index.html',app),
-    url(r'channel', app, name="home"),
-    url(r'channel/(?P<path>.*)$', app, name="homess"),
+    url(r'^channel', app),
+    url(r'^channel/(?P<path>.*)$', app),
     url(r'^$',app),
 ]
 #urlpatterns+= static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
