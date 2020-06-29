@@ -1,0 +1,65 @@
+{% extends '_admin/oa_base.html' %}
+{% load static %}
+{% block title %} All videos{% endblock title %}
+{% block app_title %} All Videos{% endblock app_title %}
+{% block breadcrumbs %}
+<li class="breadcrumb-item">videos</li>
+{% endblock breadcrumbs %}
+{% block content %}
+
+<div class="card" >
+    <div class="card-header bg-success">
+        <h3 class="card-title">All Videos</h3>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body" style="overflow-x:scroll">
+        <table id="example1" class="table table-bordered table-striped table-responsive-sm table-sm">
+            <thead>
+                <tr>
+                    <th colspan=2>Video</th>
+                    <th>Description</th>
+                    <th>Published stream</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for video in videos %}
+                <tr>
+                    <td class="text-center"><img width="100px" src="https://app.studentsonly.in/media/{{video.icon}}"/></td>
+                    <td>{{video.name}}</td>
+                    <td>{{video.info}}</td>
+                    <td><ul class="list-unstyled">{% for playlist in video.playlist.all %}
+                        <li>{{playlist.name}}-{{playlist.programme.name}} | {{playlist.programme.channel.name}}</li>
+                    {% endfor %}</ul></td>
+                    <td>
+                    <button class="btn btn-sm btn-info" ><i class="fa fa-edit"></i></button>
+                    <button class="btn btn-sm btn-danger" ><i class="fa fa-trash"></i></button>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <!-- /.card-body -->
+</div>
+
+{% endblock content %}
+{% block script %}
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
+  <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+<script>
+  $(function () {
+
+    $('#example1').DataTable({
+      "paging": true,
+      "lengthChange": true,
+      "searching": true,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+    });
+  });
+</script>
+{% endblock script %}

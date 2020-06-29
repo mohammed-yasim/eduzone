@@ -1,7 +1,7 @@
 from django.urls import path, re_path,include
 
 from django.views.generic import TemplateView
-from .views import auth_form,auth_request,del_auth,_dashboard,_status
+from .views import auth_form,auth_request,del_auth,_dashboard,_status,_videos,_channels
 
 urlpatterns = [
     path("",auth_form),
@@ -14,9 +14,16 @@ urlpatterns = [
         path("",_dashboard.index,name=''),
     ])),
     #status
-    path("status/",include([
-        path("home/",_status.index),
-        path("",_status.index),
+    path("videos/",include([
+        path("home/",_videos.index),
+        path("",_videos.index),
+    ])),
+    path("channels/",include([
+        path("all/",_channels.index),
+        path("",_channels.index),
+        path("programmes/<qchannel>",_channels.allprogrammes),
+        path("programmes/<qchannel>/playlist/<qprogramme>",_channels.allplaylist),
+        path("programmes/<qchannel>/playlist/<qprogramme>/videos/<qplaylist>",_channels.videos),
     ])),
 
 

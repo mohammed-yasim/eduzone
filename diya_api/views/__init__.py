@@ -6,10 +6,11 @@ from django.views.decorators.csrf import csrf_exempt
 from datetime import datetime, timedelta
 from django.http import JsonResponse
 from django.core import serializers
-from diya_api.models import Channel, Programme, Playlist, Client, Categories
+from diya_api.models import Channel, Programme, Playlist, Client, Categories,Video
 import json
 import ast
 from classroom.models import SubscriptionList as SList
+from dashboard_admin.models import Esubscibers,Replies,Comment,Article
 
 
 def bypass(request):
@@ -17,6 +18,9 @@ def bypass(request):
     #login(request, user)
     return True
 
+@csrf_exempt
+def videoArticles(request,vid):
+    return 0
 
 @csrf_exempt
 def channels(request):
@@ -38,7 +42,7 @@ def channels(request):
             filter_list += """]"""
             filter_listres = ast.literal_eval(filter_list)
             json_template['catfilter'] = filter_listres
-        queryset = Channel.objects.filter(pub=True,active=True,enterprize = False)
+        queryset = Channel.objects.filter(pub=True,active=True)
         if(queryset.count() >= 1):
             var_list = """["""
             for channel in queryset:
@@ -67,7 +71,7 @@ def channel(request, name):
         json_template = {'response': 200,
                          'status': 'OK', 'message': '', 'data': {}}
         try:
-            q_channel = Channel.objects.get(uri=name,pub=True,active=True,enterprize = False)
+            q_channel = Channel.objects.get(uri=name,pub=True,active=True)
             # print(q_channel.programme.all())
             json_template['data']['name'] = q_channel.name
             if(q_channel.icon):
@@ -135,7 +139,7 @@ def programme(request, name, pgm):
                     count_width = 0
                     pagit = 1
                     pagit = int(request.GET["p"])
-                    for video in aa.video.all().extra(where=['date<%s'], params=[datetime.now()]).order_by('-date')[pagit*10-10:pagit*10]:
+                    for video in aa.video.filter(deleted=False,banned=False).extra(where=['date<%s'], params=[datetime.now()]).order_by('-date')[pagit*10-10:pagit*10]:
                         count_width += 1
                         var_list += """{"""
                         var_list += """ "name":"%s",""" % (video.name)
@@ -172,7 +176,7 @@ def programme(request, name, pgm):
                     count_width = 0
                     pagit = 1
                     pagit = int(request.GET["p"])
-                    for video in aa.video.all().extra(where=['date<%s'], params=[datetime.now()]).order_by('-date')[pagit*10-10:pagit*10]:
+                    for video in aa.video.filter(deleted=False,banned=False).extra(where=['date<%s'], params=[datetime.now()]).order_by('-date')[pagit*10-10:pagit*10]:
                         count_width += 1
                         var_list += """{"""
                         var_list += """ "name":"%s",""" % (video.name)
@@ -204,3 +208,22 @@ def programme(request, name, pgm):
         json_template['status'] = 'Not OK'
         json_template['message'] = '%s' % (e)
         return HttpResponse(json.dumps(json_template), content_type="application/json")
+
+def videoArticles(request,vid):
+    bypass(request)
+    start = datetime.now().timestamp() * 1000
+    json_template = {'response': 0, 'status': 'fail',
+                     'message': 'Please Login', 'data': {}}
+    json_template['data']['vid'] = vid
+    video = Video.objects.get(uid=vid)
+    json_template['data']['name'] = video.name
+    json_template['data']['info'] = video.info
+    try:
+        article = Article.objects.get(uid=vid)
+        json_template['data']['content'] = article.text
+        json_template['data']['article'] = True
+    except:
+        json_template['data']['article'] = False
+   
+    return HttpResponse(json.dumps(json_template), content_type="application/json")
+

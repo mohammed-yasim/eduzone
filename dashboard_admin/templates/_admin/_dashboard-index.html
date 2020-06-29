@@ -1,8 +1,8 @@
 {% extends '_admin/oa_base.html' %}
-{% block title %} {% endblock title %}
-{% block app_title %} Example {% endblock app_title %}
+{% block title %} Dashboard {% endblock title %}
+{% block app_title %} Dashboard {% endblock app_title %}
 {% block breadcrumbs %}
-<li class="breadcrumb-item">Main</li>
+<li class="breadcrumb-item">Dashboard</li>
 {% endblock breadcrumbs %}
 {% block content %}
 <div class="row">
@@ -11,7 +11,7 @@
               <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cog"></i></span>
 
               <div class="info-box-content">
-                <span class="info-box-text">channels</span>
+                <span class="info-box-text">Channels/Institutions</span>
                 <span class="info-box-number">
                  {{request.user.client.channels.all.count}}
                 </span>

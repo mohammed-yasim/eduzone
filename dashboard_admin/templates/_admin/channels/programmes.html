@@ -1,0 +1,48 @@
+{% extends '_admin/oa_base.html' %}
+{% block title %} {{qchannel}} Channels{% endblock title %}
+{% block app_title %} {{qchannel}} {% endblock app_title %}
+{% block breadcrumbs %}
+<li class="breadcrumb-item"><a href="/_admin/channels/">Channels</a></li>
+<li class="breadcrumb-item">{{qchannel}}</li>
+{% endblock breadcrumbs %}
+{% block content %}
+<h4 class="mb-2">Programmes/Classes</h4>
+<div class="row">
+    {% for programme in programmes %}
+    <div class="col-md-3">
+        <div class="card position-relative">
+        {% if programme.premium %}<div class="ribbon-wrapper">
+                        <div class="ribbon bg-primary">
+                          Premium
+                        </div>
+                      </div>
+                      {% else %}
+                      <div class="ribbon-wrapper">
+                      <div class="ribbon bg-danger">
+                          Free
+                        </div>
+                        </div>
+                      {% endif %}
+            <div class="card-header">
+                <h2 class="card-title text-bold">{{programme.name}}</h2>
+            </div>
+            <div class="card-body row">
+                <div class="col-4">
+                <img style="width:60px;height:60px" src="https://app.studentsonly.in/media/{{programme.icon}}" />
+                </div>
+                <div class="col-8">
+                {{programme.info}}
+                </div>
+                <div class="col-12 text-right"><a class="mt-2 btn btn-sm btn-success"
+                        href="/_admin/channels/programmes/{{qchannel}}/playlist/{{programme.uri}}">Open</a></div>
+            </div>
+
+        </div>
+    </div>
+    {% endfor %}
+
+</div>
+{% endblock content %}
+{% block script %}
+
+{% endblock script %}

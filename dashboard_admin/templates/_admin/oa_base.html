@@ -23,6 +23,11 @@
     font-size:9pt;
   }
   </style>
+  <script>
+window.history.pushState(null, null, location.href);
+window.onpopstate = function () { window.history.go(1);
+};
+</script>
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed  layout-footer-fixed">
@@ -38,7 +43,7 @@
         </li>
       </ul>
       <!-- SEARCH FORM -->
-      <div class="form-inline ml-3">
+      <div class="form-inline ml-3 text-capitalize">
       {% block app_title %} Dashboard {% endblock app_title %}
       </div>
       <script>
@@ -61,27 +66,11 @@
         <li class="nav-item dropdown">
           <a class="nav-link" data-toggle="dropdown" href="#">
             <i class="far fa-bell"></i>
-            <span class="badge badge-warning navbar-badge">15</span>
+            <span class="badge badge-warning navbar-badge">0</span>
           </a>
           <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-            <span class="dropdown-header">15 Notifications</span>
+            <span class="dropdown-header">0 Notifications</span>
             <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item">
-              <i class="fas fa-envelope mr-2"></i> 4 new messages
-              <span class="float-right text-muted text-sm">3 mins</span>
-            </a>
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item">
-              <i class="fas fa-users mr-2"></i> 8 friend requests
-              <span class="float-right text-muted text-sm">12 hours</span>
-            </a>
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item">
-              <i class="fas fa-file mr-2"></i> 3 new reports
-              <span class="float-right text-muted text-sm">2 days</span>
-            </a>
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
           </div>
         </li>
         <li class="nav-item">
@@ -121,13 +110,13 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="/_admin/status" class="nav-link">
+              <a  class="nav-link">
                 <i class="nav-icon fas fa-sticky-note"></i>
                 <p>Status</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="/_admin/statistics" class="nav-link">
+              <a class="nav-link">
                 <i class="nav-icon fas fa-chart-bar"></i>
                 <p>statistics</p>
               </a>
@@ -140,17 +129,25 @@
             </li>
             <li class="nav-header text-danger">Content Management</li>
             <li class="nav-item">
-              <a href="/_admin/devices" class="nav-link">
-                <i class="nav-icon fas fa-database"></i>
-                <p>Programmes/classes</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="/_admin/devices" class="nav-link">
+              <a href="/_admin/videos" class="nav-link">
                 <i class="nav-icon fas fa-video"></i>
                 <p>All Videos</p>
               </a>
             </li>
+            <li class="nav-item">
+              <a href="/_admin/channels/"  class="nav-link">
+                <i class="nav-icon fas fa-database"></i>
+                <p>Channels/Institutions</p>
+              </a>
+            </li>
+            </li>
+            <li class="nav-item">
+              <a href="/_admin/channels" class="nav-link">
+                <i class="nav-icon fas fa-comments"></i>
+                <p>Comments/QA</p>
+              </a>
+            </li>
+          
             <li class="nav-header text-primary">User Management</li>
             <li class="nav-item">
               <a href="/infox/django/auth/user/" class="nav-link">

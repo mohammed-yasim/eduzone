@@ -1,6 +1,5 @@
 from django.shortcuts import render,redirect,HttpResponse
 from django.contrib.auth import authenticate,login,logout
-from django.contrib.auth.decorators import login_required
 import re
 def ubc(request,default=None):
     referer = request.META.get('HTTP_REFERER')

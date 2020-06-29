@@ -1,0 +1,39 @@
+{% extends '_admin/oa_base.html' %}
+{% block title %} Playlist - {{qprogramme}}{{qchannel}}{% endblock title %}
+{% block app_title %} {{qchannel}} {% endblock app_title %}
+{% block breadcrumbs %}
+<li class="breadcrumb-item"><a href="/_admin/channels/">Channels</a></li>
+<li class="breadcrumb-item"><a href="/_admin/channels/programmes/{{qchannel}}">{{qchannel}}</a></li>
+<li class="breadcrumb-item">{{qprogramme}}</li>
+
+{% endblock breadcrumbs %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-10">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">
+                  <i class="fas fa-text-width"></i>
+                  Playlist/Subjects
+                </h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <ol>
+                
+    {% for playlist in playlists %}
+    <li><a href="/_admin/channels/programmes/{{qchannel}}/playlist/{{qprogramme}}/videos/{{playlist.uri}}">{{playlist.name}}</a> ({{playlist.video.all.count}})</li>
+                    {% endfor %}
+                </ol>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+  
+
+</div>
+{% endblock content %}
+{% block script %}
+
+{% endblock script %}
