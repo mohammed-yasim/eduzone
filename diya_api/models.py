@@ -3,6 +3,7 @@ from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import User
 from uuid import uuid4
 import os
+from dashboard_admin.models import Article
 def path_and_rename_videothumb(instance, filename):
     print(instance,filename)
     upload_to = "video_thumb"
@@ -87,6 +88,16 @@ class Video(models.Model):
         ordering = ['-date']
     def __str__(self):
         return ("%s (%s)" %(self.name,self.info))
+    def save(self,*args, **kwargs):
+        print(self.uid)
+        try:
+            temp = Article.objects.get(uid=self.uid)
+            print(temp)
+        except:
+            print('created')
+            Article(uid=self.uid).save()
+        super(Video, self).save(*args, **kwargs)
+
 
 # Create your models here.
 class Categories(models.Model):

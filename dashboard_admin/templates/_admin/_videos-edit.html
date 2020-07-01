@@ -1,0 +1,105 @@
+{% extends '_admin/oa_base.html' %}
+{% load static %}
+{% block title %} Edit Video info/Article{% endblock title %}
+{% block app_title %} Edit Video info/Article{% endblock app_title %}
+{% block breadcrumbs %}
+<li class="breadcrumb-item">videos</li>
+{% endblock breadcrumbs %}
+{% block content %}
+<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        {% if data.edit == 'error' %}
+        <div class="alert alert-danger alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h5><i class="icon fas fa-ban"></i> {{data.edit}}!</h5>
+            {{data.edit_message}}
+        </div>
+        {% endif %}
+
+        {% if data.edit == 'success' %}
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h5><i class="icon fas fa-check"></i> {{data.edit}}!</h5>
+            {{data.edit_message}}
+        </div>
+        {% endif %}
+        <div class="card card-info">
+            <div class="card-header">
+                <h3 class="card-title">Edit Video/Topic </h3>
+            </div>
+            <!-- /.card-header -->
+            <!-- form start -->
+            <form method="POST" class="form-horizontal" onbefore="$('#editorhidden').val(quill.root.innerHTML);">
+                {% csrf_token %}
+                <div class="card-body">
+                    <div class="form-group row">
+                        <label for="inputvideoname" class="col-sm-2 col-form-label">Name</label>
+                        <div class="col-sm-10">
+                            <input name="videoeditname" type="text" readonly class="form-control" id="inputvideoname"
+                                value="{{video.name}}">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputvideonameinfo" class="col-sm-2 col-form-label">Description</label>
+                        <div class="col-sm-10">
+                            <input name="videoeditinfo" type="text" class="form-control" id="inputvideonameinfo"
+                                value="{{video.info}}">
+                        </div>
+                    </div>
+                    <input name="videoeditarticle" type="hidden" id="editorhidden">
+                    <div id="editor" style="min-height:300px;" onKeyup="$('#editorhidden').val(quill.root.innerHTML);"
+                        oninput="$('#editorhidden').val(quill.root.innerHTML);" 
+                        onkeypress="$('#editorhidden').val(quill.root.innerHTML);" 
+                        onkeydown="$('#editorhidden').val(quill.root.innerHTML);" >
+                        {% autoescape off %}
+                        {{article.text}}
+                        {% endautoescape %}
+                    </div>
+
+                    <!-- Include the Quill library -->
+
+                </div>
+                <!-- /.card-body -->
+                <div class="card-footer">
+                    <button type="submit"  onclick="$('#editorhidden').val(quill.root.innerHTML);" class="btn btn-info">Save</button>
+                    <a href="/_admin/videos" class="btn btn-default float-right">Cancel</a>
+                </div>
+                <!-- /.card-footer -->
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+{% block script %}
+<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+
+<!-- Initialize Quill editor -->
+<script>
+    let Link = window.Quill.import('formats/link');
+
+    class CustomLink extends Link {
+
+        static sanitize(url) {
+            let value = super.sanitize(url);
+            if (value) {
+                for (let i = 0; i < CustomLink.PROTOCOL_WHITELIST.length; i++)
+                    if (value.startsWith(CustomLink.PROTOCOL_WHITELIST[i]))
+                        return value;
+                return `http://${value}`
+            }
+            return value;
+        }
+    }
+    Quill.register(CustomLink);
+    var quill = new Quill('#editor', {
+        theme: 'snow'
+    });
+    $('#editorhidden').val(quill.root.innerHTML);
+</script>
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>
+{% endblock script %}

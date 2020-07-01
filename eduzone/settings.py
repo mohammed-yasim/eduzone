@@ -94,7 +94,7 @@ WSGI_APPLICATION = 'eduzone.wsgi.application'
 DATABASES = {
   'default': {
       'ENGINE': 'django.db.backends.postgresql_psycopg2',
-      'NAME': 'eduzone_trial',
+      'NAME': 'eduzone_live',
       'HOST': '15.206.232.138',
       'PORT': '5432',
       'USER': 'postgres',

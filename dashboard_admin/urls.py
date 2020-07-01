@@ -17,6 +17,7 @@ urlpatterns = [
     path("videos/",include([
         path("home/",_videos.index),
         path("",_videos.index),
+        path("edit/<vid>",_videos.editvideo),
     ])),
     path("channels/",include([
         path("all/",_channels.index),

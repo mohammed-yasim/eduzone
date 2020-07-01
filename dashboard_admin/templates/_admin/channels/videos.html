@@ -37,9 +37,7 @@
                     <td><ul class="list-unstyled">{% for playlist in video.playlist.all %}
                         <li>{{playlist.name}}-{{playlist.programme.name}} | {{playlist.programme.channel.name}}</li>
                     {% endfor %}</ul></td>
-                    <td>
-                    <button class="btn btn-sm btn-info" ><i class="fa fa-edit"></i></button>
-                    <button class="btn btn-sm btn-danger" ><i class="fa fa-trash"></i></button>
+                    <td class="text-center">  <a href="/_admin/videos/edit/{{video.uid}}" class="btn btn-sm btn-info" ><i class="fa fa-edit"></i></a>
                     </td>
                 </tr>
             {% endfor %}

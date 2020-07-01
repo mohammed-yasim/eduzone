@@ -23,11 +23,6 @@
     font-size:9pt;
   }
   </style>
-  <script>
-window.history.pushState(null, null, location.href);
-window.onpopstate = function () { window.history.go(1);
-};
-</script>
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed  layout-footer-fixed">
@@ -89,7 +84,7 @@ window.onpopstate = function () { window.history.go(1);
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
       <!-- Brand Logo -->
-      <a href="/bloodcell" class="brand-link">
+      <a href="/_admin" class="brand-link">
         <img src="{% static 'logo512.png' %}" alt="AdminLTE Logo" class="brand-image elevation-3"
           style="opacity: .8">
         <span class="brand-text font-weight-bold">DataX</span>
@@ -109,7 +104,7 @@ window.onpopstate = function () { window.history.go(1);
                 <p>Dashboard</p>
               </a>
             </li>
-            <li class="nav-item">
+            <!--li class="nav-item">
               <a  class="nav-link">
                 <i class="nav-icon fas fa-sticky-note"></i>
                 <p>Status</p>
@@ -120,7 +115,7 @@ window.onpopstate = function () { window.history.go(1);
                 <i class="nav-icon fas fa-chart-bar"></i>
                 <p>statistics</p>
               </a>
-            </li>
+            </li-->
             <li class="nav-item">
               <a href="/_admin/logout" class="nav-link">
                 <i class="nav-icon fas fa-sign-out-alt"></i>
@@ -155,12 +150,12 @@ window.onpopstate = function () { window.history.go(1);
                 <p>Students/Subscribers</p>
               </a>
             </li>
-            <li class="nav-item">
+            <!--li class="nav-item">
               <a class="nav-link">
                 <i class="nav-icon fas fa-user-alt"></i>
                 <p>Teachers/staff</p>
               </a>
-            </li>
+            </li-->
             <li class="nav-header text-warning">Services</li>
             <li class="nav-item">
               <a class="nav-link">

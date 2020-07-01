@@ -10,7 +10,7 @@ from diya_api.models import Channel, Programme, Playlist, Client, Categories,Vid
 import json
 import ast
 from classroom.models import SubscriptionList as SList
-from dashboard_admin.models import Esubscibers,Replies,Comment,Article
+from dashboard_admin.models import Replies,Comment,Article
 
 
 def bypass(request):
@@ -18,9 +18,6 @@ def bypass(request):
     #login(request, user)
     return True
 
-@csrf_exempt
-def videoArticles(request,vid):
-    return 0
 
 @csrf_exempt
 def channels(request):
@@ -209,6 +206,7 @@ def programme(request, name, pgm):
         json_template['message'] = '%s' % (e)
         return HttpResponse(json.dumps(json_template), content_type="application/json")
 
+@csrf_exempt
 def videoArticles(request,vid):
     bypass(request)
     start = datetime.now().timestamp() * 1000
@@ -224,6 +222,42 @@ def videoArticles(request,vid):
         json_template['data']['article'] = True
     except:
         json_template['data']['article'] = False
-   
+    try:
+        comments = article.comment.all()
+        json_template['data']['comments'] = ""
+        text = """ """
+        for comment in comments:
+            text += """<li>
+            <div class="commenterImage">
+            <i class="fa fa-user"></i>
+            </div><div class="commentText">
+            <p class="">%s</p>
+            <span class="date sub-text">%s - %s</span>
+            </div>
+            </li>"""%(comment.text,comment.name,comment.date)
+        json_template['data']['comments'] = text
+    except:
+        json_template['data']['comments'] = "Error or No Comments"
     return HttpResponse(json.dumps(json_template), content_type="application/json")
+@csrf_exempt
+def commentit(request,vid):
+    bypass(request)
+    user = request.GET['tempuser']
+    if user  == 'undefined':
+        user = request.user
+        name = user.get_full_name()
+        user = user.username
+    createrc = Comment(text=request.GET['text'],user=user,name=name)
+    createrc.save()
+    temparticle = Article.objects.get(uid=vid)
+    temparticle.comment.add(createrc)
+    text = """<li>
+            <div class="commenterImage">
+            <i class="fa fa-user"></i>
+            </div><div class="commentText">
+            <p class="">%s</p>
+            <span class="date sub-text">%s - %s</span>
+            </div>
+    </li>"""%(createrc.text,createrc.name,createrc.date)
+    return HttpResponse(text)
 
