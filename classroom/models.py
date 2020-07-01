@@ -73,8 +73,11 @@ class Esubscibers(models.Model):
     username = models.CharField(_("Username"), max_length=32)
     password = models.CharField(_("Password"), max_length=32)
     name = models.CharField(_("Name"), max_length=50,default="")
+    key = models.CharField(_("KEY"), max_length=50,blank=True,default="?")
+    auth = models.CharField(_("AUTH"), max_length=50,blank=True,default="?")
     programme = models.ForeignKey(Programme, verbose_name=_("Programme"), on_delete=models.CASCADE,related_name="esubscriber")
     client = models.ForeignKey(Client, verbose_name=_("Client"), on_delete=models.CASCADE,related_name="eusers")
+
     def __str__(self):
         pass
 
