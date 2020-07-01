@@ -4,7 +4,7 @@ import json
 def index(request):
     data = """{
     "short_name": "StudentsOnly.in",
-    "name": "StudentsOnly.in The learning App",
+    "name": "StudentsOnly The learning App",
     "start_url": ".",
     "icons": [{
         "src": "/static/favicon.ico",
