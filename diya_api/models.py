@@ -154,7 +154,7 @@ class Playlist(models.Model):
     name = models.CharField(verbose_name="Name", max_length=50)
     uri = models.CharField(verbose_name="Uri", max_length=64,unique=True)
     programme = models.ForeignKey(Programme, verbose_name="Programme", on_delete=models.CASCADE,related_name='playlist')
-    video = models.ManyToManyField(Video, verbose_name="Videos",related_name='playlist')
+    video = models.ManyToManyField(Video,verbose_name="Videos",related_name='playlist',blank=True)
     orderby = models.IntegerField(_("Order"),default=1000)
     class Meta:
         verbose_name = '3. Subject/Playlist'
