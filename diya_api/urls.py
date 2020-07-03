@@ -10,5 +10,6 @@ urlpatterns = [
     path("<name>/programme/<pgm>",programme),
     path("article/<vid>",videoArticles),
     path("comment/<vid>",commentit),
+    path("pro/",include('pro_edu.urls')),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]

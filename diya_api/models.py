@@ -162,3 +162,18 @@ class Playlist(models.Model):
         ordering = ['orderby']
     def __str__(self):
         return ("%s (%s - %s) [%s]" %(self.programme.channel.name,self.programme.name,self.name,self.orderby))
+
+
+class Esubscibers(models.Model):
+    uid = models.CharField(_("UID"), default=uuid4, max_length=64)
+    username = models.CharField(_("Username"), max_length=32)
+    password = models.CharField(_("Password"), max_length=32)
+    name = models.CharField(_("Name"), max_length=50,default="")
+    key = models.CharField(_("KEY"), max_length=50,blank=True,default="?")
+    auth = models.CharField(_("AUTH"), max_length=50,blank=True,default="?")
+    programme = models.ForeignKey(Programme, verbose_name=_("Programme"), on_delete=models.CASCADE,related_name="esubscriber")
+    client = models.ForeignKey(Client, verbose_name=_("Client"), on_delete=models.CASCADE,related_name="eusers")
+
+    class Meta:
+        verbose_name = 'Enterprise Subscriber'
+        verbose_name_plural = 'Enterprise Subscribers'

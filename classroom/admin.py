@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Profile,SubscriptionList,EduzoneOrder,Esubscibers
+from .models import Profile,SubscriptionList,EduzoneOrder
 # Register your models here.
 
 class ProfileAdmin(admin.ModelAdmin):
@@ -8,4 +8,3 @@ class ProfileAdmin(admin.ModelAdmin):
 admin.site.register(Profile,ProfileAdmin)
 admin.site.register(SubscriptionList)
 admin.site.register(EduzoneOrder)
-admin.site.register(Esubscibers)

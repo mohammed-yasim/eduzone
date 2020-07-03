@@ -6,7 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 from datetime import datetime, timedelta
 from django.http import JsonResponse
 from django.core import serializers
-from diya_api.models import Channel, Programme, Playlist, Client, Categories,Video
+from diya_api.models import Channel, Programme, Playlist, Client, Categories,Video,Esubscibers
 import json
 import ast
 from classroom.models import SubscriptionList as SList
@@ -241,8 +241,15 @@ def videoArticles(request,vid):
     return HttpResponse(json.dumps(json_template), content_type="application/json")
 @csrf_exempt
 def commentit(request,vid):
-    bypass(request)
     user = request.GET['tempuser']
+    print(user)
+    try:
+        user = Esubscibers.objects.get(auth=user)
+        name = user.name
+        user = user.username
+    except Exception as e:
+        print(e)
+    bypass(request)
     if user  == 'undefined':
         user = request.user
         name = user.get_full_name()

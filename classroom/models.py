@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from diya_api.models import Programme,EduzonePlan,Client
+from diya_api.models import Programme,EduzonePlan
 from django.utils.translation import gettext_lazy as _
 from uuid import uuid4
 
@@ -46,7 +46,7 @@ class SubscriptionList(models.Model):
     validity = models.IntegerField(_("Validity"),default=0)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='subscriptions')
     def __str__(self):
-        return self.programme.name
+        return ("%s (%s - %s) %s" %(self.user,self.programme.name,self.programme.channel.name,self.expiry))
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE,related_name='profile')
@@ -67,23 +67,6 @@ def create_user_profile(sender, instance, created, **kwargs):
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
-
-class Esubscibers(models.Model):
-    uid = models.CharField(_("UID"), default=uuid4, max_length=64)
-    username = models.CharField(_("Username"), max_length=32)
-    password = models.CharField(_("Password"), max_length=32)
-    name = models.CharField(_("Name"), max_length=50,default="")
-    key = models.CharField(_("KEY"), max_length=50,blank=True,default="?")
-    auth = models.CharField(_("AUTH"), max_length=50,blank=True,default="?")
-    programme = models.ForeignKey(Programme, verbose_name=_("Programme"), on_delete=models.CASCADE,related_name="esubscriber")
-    client = models.ForeignKey(Client, verbose_name=_("Client"), on_delete=models.CASCADE,related_name="eusers")
-
-    def __str__(self):
-        pass
-
-    class Meta:
-        verbose_name = 'Enterprise Subscriber'
-        verbose_name_plural = 'Enterprise Subscribers'
 
 
 

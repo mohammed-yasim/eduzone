@@ -4,6 +4,8 @@ from django.contrib.admin.views.decorators import staff_member_required
 import razorpay,json
 from uuid import uuid4
 from datetime import datetime,timedelta
+
+@login_required(login_url='/_accounts/login/')
 def app(request,path=0):
     return render(request,'static/index.html')
 
@@ -130,7 +132,7 @@ def payment_check(request):
             plan = order.plan,
             programme = order.programme,
             is_activated = True,
-            expiry = datetime.now() - timedelta(days=int(order.plan.validity)),
+            expiry = datetime.now() + timedelta(days=int(order.plan.validity)),
             validity = order.plan.validity,
             user = request.user
         )
