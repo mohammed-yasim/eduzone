@@ -9,6 +9,11 @@ def index(request):
     return render(request,'_admin/_videos-index.html',{'videos':videos })
 
 @staff_member_required(login_url='/_admin/login')
+def comments(request):
+    videos = request.user.client.videos.filter(deleted=False,banned=False).extra(where=['date<%s'], params=[datetime.now()]).order_by('-date')
+    return render(request,'_admin/_videos-comments.html',{'videos':videos })
+
+@staff_member_required(login_url='/_admin/login')
 def editvideo(request,vid):
     data = {}
     if request.POST:

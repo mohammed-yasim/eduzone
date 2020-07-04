@@ -241,9 +241,8 @@ def videoArticles(request,vid):
     return HttpResponse(json.dumps(json_template), content_type="application/json")
 @csrf_exempt
 def commentit(request,vid):
-    user = request.GET['tempuser']
-    print(user)
     try:
+        user = request.GET['tempuser']
         user = Esubscibers.objects.get(auth=user)
         name = user.name
         user = user.username
@@ -254,7 +253,8 @@ def commentit(request,vid):
         user = request.user
         name = user.get_full_name()
         user = user.username
-    createrc = Comment(text=request.GET['text'],user=user,name=name)
+    videorc = Video.objects.get(uid=vid)
+    createrc = Comment(text=request.GET['text'],user=user,name=name,video=videorc)
     createrc.save()
     temparticle = Article.objects.get(uid=vid)
     temparticle.comment.add(createrc)

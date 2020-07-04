@@ -78,7 +78,7 @@ class Video(models.Model):
     icon = models.ImageField(verbose_name="Thumbnail",upload_to=path_and_rename_videothumb, null=True,blank=True,default="thumbnail_video.png")
     date = models.DateTimeField(verbose_name="BroadCast Time", auto_now=False, auto_now_add=False)
     uri = models.CharField(verbose_name="Youtube vid", max_length=64)
-    uid = models.TextField(verbose_name="Channel",default=uuid4,editable=False)
+    uid = models.TextField(verbose_name="UID",default=uuid4,editable=False)
     banned = models.BooleanField(_("Content Banned"),default=False)
     demo = models.BooleanField(_("Demo Video (Sample)"),default=False)
     client = models.ForeignKey(Client, verbose_name=_("Owner"), on_delete=models.CASCADE,null=True,blank=True,related_name='videos')
@@ -163,17 +163,23 @@ class Playlist(models.Model):
     def __str__(self):
         return ("%s (%s - %s) [%s]" %(self.programme.channel.name,self.programme.name,self.name,self.orderby))
 
-
 class Esubscibers(models.Model):
-    uid = models.CharField(_("UID"), default=uuid4, max_length=64)
+    uid = models.CharField(_("UID"), default=uuid4, max_length=64,editable=False)
     username = models.CharField(_("Username"), max_length=32)
-    password = models.CharField(_("Password"), max_length=32)
+    password = models.CharField(_("Password"), max_length=32,default="logitech")
+    #--------------------------------------------------------------------
     name = models.CharField(_("Name"), max_length=50,default="")
+    details = models.TextField(_("Details"), max_length=50,default="",blank=True)
+    contact = models.CharField(_("Contact"), max_length=10,default="",blank=True)
+    #--------------------------------------------------------------------
     key = models.CharField(_("KEY"), max_length=50,blank=True,default="?")
     auth = models.CharField(_("AUTH"), max_length=50,blank=True,default="?")
     programme = models.ForeignKey(Programme, verbose_name=_("Programme"), on_delete=models.CASCADE,related_name="esubscriber")
     client = models.ForeignKey(Client, verbose_name=_("Client"), on_delete=models.CASCADE,related_name="eusers")
-
+    #---------------------------------------------------------------------
+    def __str__(self):
+        return ("%s - (%s) %s"%(self.client,self.username,self.name))
+    
     class Meta:
         verbose_name = 'Enterprise Subscriber'
         verbose_name_plural = 'Enterprise Subscribers'

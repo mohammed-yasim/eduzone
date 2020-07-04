@@ -10,6 +10,7 @@ def index(request, domain):
     try:
         channel = Channel.objects.get(e_host=domain,enterprize=True)
         data['channel'] = channel.name
+        data['info'] = channel.info
         data['auth'] = '%s'%(uuid4().hex)
         data['response'] = 200
         data['status'] = 'OK'

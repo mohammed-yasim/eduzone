@@ -19,7 +19,8 @@ class Comment(models.Model):
     user = models.CharField(_("username"), max_length=50,default='')
     name = models.CharField(_("Name"), max_length=32,default='')
     date = models.DateTimeField(_("Date time"), auto_now=True)
-    reply = models.ManyToManyField(Replies, verbose_name=_("Replies"),blank=True,related_name="comment")
+    reply = models.ManyToManyField(Replies, verbose_name=_("Replies"),blank=True,related_name="reply")
+    video = models.ForeignKey("diya_api.Video", verbose_name=_("video"), on_delete=models.CASCADE,related_name='comments',blank=True,null=True)
     class Meta:
         verbose_name = _("Comment")
         verbose_name_plural = _("Comments")

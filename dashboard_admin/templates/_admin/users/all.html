@@ -1,0 +1,60 @@
+{% extends '_admin/oa_base.html' %}
+{% block title %} Subscribers {% endblock title %}
+{% block app_title %} Students/Subscribers {% endblock app_title %}
+{% block breadcrumbs %}
+<li class="breadcrumb-item">All</li>
+{% endblock breadcrumbs %}
+{% block content %}
+<ul>
+{% for user in request.user.client.eusers.all %}
+<li>{{user.name}}</li>
+{% endfor %}
+</ul>
+
+ <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default">
+                  New User
+                </button>
+<div class="modal fade" id="modal-default">
+        <div class="modal-dialog">
+           <form method="POST"  action="/_admin/subscribers/add" class="form-horizontal">
+             {% csrf_token %}
+          <div class="modal-content card card-danger">
+            <div class="modal-header card-header">
+              <h4 class="modal-title">Default Modal</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body card-body">
+         
+                      <input type="text" name="username" class="form-control mb-1" placeholder="Username" required>
+                      <input type="text" name="password" class="form-control mb-1" placeholder="Password" required value="logitech">
+                      <hr/>
+                      <input type="text" name="name" class="form-control mb-1" placeholder="Name" required>
+                      <textarea name="details" class="form-control mb-1" placeholder="Details"></textarea>
+                      <input name="contact" type="text" class="form-control mb-1" placeholder="Contact">
+                      <hr/>
+                      <select class="form-control mb-1" name="pgm">
+                      {% for channel in datas.channels %}
+                        {% for programme in channel.programme.all %}
+                        <option value="{{programme.uid}}">{{programme}}</option>
+                        {% endfor %}
+                      {% endfor %}
+                      </select>
+
+            
+            </div>
+            <div class="modal-footer justify-content-between">
+              <a type="button" class="btn btn-default" data-dismiss="modal">Close</a>
+              <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+          </div>
+            </form>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+{% endblock content %}
+{% block script %}
+
+{% endblock script %}

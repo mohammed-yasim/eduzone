@@ -1,0 +1,61 @@
+{% extends '_admin/oa_base.html' %}
+{% load static %}
+{% block title %} All Comments{% endblock title %}
+{% block app_title %} All Comments{% endblock app_title %}
+{% block breadcrumbs %}
+<li class="breadcrumb-item">comments</li>
+{% endblock breadcrumbs %}
+{% block content %}
+
+<div class="card" >
+    <div class="card-header bg-success">
+        <h3 class="card-title">All Comments</h3>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body" style="overflow-x:scroll">
+        <table id="example1" class="table table-bordered table-striped table-responsive-sm table-sm">
+            <thead>
+                <tr>
+                    <th>Video</th>
+                    <th>Comments</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for video in videos %}
+                <tr>
+                    <td>{{video.name}}</td>
+                    <td><ul class="list-unstyled">{% for comment in video.comments.all %}
+                        <li>{{comment.text}}<hr></li>
+                    {% endfor %}</ul></td>
+                    <td  class="text-center">
+                    <a href="/_admin/videos/edit/{{video.uid}}" class="btn btn-sm btn-info" ><i class="fa fa-edit"></i></a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <!-- /.card-body -->
+</div>
+
+{% endblock content %}
+{% block script %}
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
+  <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+<script>
+  $(function () {
+
+    $('#example1').DataTable({
+      "paging": true,
+      "lengthChange": true,
+      "searching": true,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+    });
+  });
+</script>
+{% endblock script %}
