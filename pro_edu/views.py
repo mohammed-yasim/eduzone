@@ -35,7 +35,7 @@ def login(request,domain):
             data['auth'] = auth
             #print("Hashed password is:", make_password(auth))
             data['key'] = make_password(auth)
-            data['token'] = hash(auth)
+            data['token'] = "%s"%(hash(auth))
             user.auth = auth
             user.key = data['token']
             user.save()
