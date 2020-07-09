@@ -3,9 +3,13 @@ from django.contrib.admin.views.decorators import staff_member_required
 from datetime import datetime
 @staff_member_required(login_url='/_admin/login')
 def index(request):
-    euser = request.user.client.enterprize
-    if euser == True:
-        echannels = request.user.client.channels.filter(enterprize=True,active=True)
+    echannels = {}
+    try:
+        euser = request.user.client.enterprize
+        if euser == True:
+            echannels = request.user.client.channels.filter(enterprize=True,active=True)
+    except:
+        pass
     channels = request.user.client.channels.filter(enterprize=False,active=True)
     return render(request,'_admin/channels/channels.html',{
         'euser': euser,

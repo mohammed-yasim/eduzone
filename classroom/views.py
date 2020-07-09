@@ -5,7 +5,6 @@ import razorpay,json
 from uuid import uuid4
 from datetime import datetime,timedelta
 
-@login_required(login_url='/_accounts/login/')
 def app(request,path=0):
     return render(request,'static/index.html')
 

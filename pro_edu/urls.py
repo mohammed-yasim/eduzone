@@ -5,4 +5,6 @@ urlpatterns = [
     path('<domain>',views.index),
     path('login/<domain>',views.login),
     path('programme/<auth>/<domain>',views.programmes),
+    path('profile/<auth>/<domain>',views.profile),
+    path('messages/<auth>/<domain>',views.messages),    
 ]

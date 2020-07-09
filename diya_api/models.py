@@ -178,8 +178,35 @@ class Esubscibers(models.Model):
     client = models.ForeignKey(Client, verbose_name=_("Client"), on_delete=models.CASCADE,related_name="eusers")
     #---------------------------------------------------------------------
     def __str__(self):
-        return ("%s - (%s) %s"%(self.client,self.username,self.name))
+        return ("%s - (%s) %s"%(self.programme.name,self.username,self.name))
     
     class Meta:
         verbose_name = 'Enterprise Subscriber'
         verbose_name_plural = 'Enterprise Subscribers'
+
+class Ewatch(models.Model):
+    euser = models.ForeignKey(Esubscibers, verbose_name=_("User"), on_delete=models.CASCADE,related_name='watched')
+    url = models.TextField(_("url"),blank=True,default=0)
+    video = models.ForeignKey(Video, verbose_name=_("Watched"), on_delete=models.CASCADE,blank=True,null=True)
+    datetime = models.DateTimeField(_("Date time"), auto_now=True)
+    #---------------------------------------------
+    def __str__(self):
+        return ("%s - %s | %s"%(self.euser.username,self.euser.name,self.video))
+
+    class Meta:
+        verbose_name = 'Enterprise Subscriber Watch history'
+        verbose_name_plural = 'Enterprise Subscribers Watch history'
+class Elogin(models.Model):
+    euser = models.ForeignKey(Esubscibers, verbose_name=_("User"), on_delete=models.CASCADE,related_name='history')
+    datetime = models.DateTimeField(_("Time"), auto_now=True)
+    datetime_text = models.TextField(_("Date Time"),blank=True)
+    location = models.CharField(_("Location"), max_length=50)
+    ip = models.CharField(_("IP"), max_length=32)
+    agent = models.TextField(_("User Agents"),blank=True)
+    #---------------------------------------------
+    def __str__(self):
+        return("%s - %s | %s"%(self.euser.username,self.euser.name,self.datetime_text))
+
+    class Meta:
+        verbose_name = 'Enterprise Subscriber Login history'
+        verbose_name_plural = 'Enterprise Subscribers Login history'

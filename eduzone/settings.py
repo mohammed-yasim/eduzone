@@ -11,6 +11,7 @@ SECRET_KEY = '+#_#+s+9n&#gy*m1q6=o%#pc%rge9qg0q0@sp04tt$q8!m^-ts'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
+#eduzonelearnings/sackply
 
 ALLOWED_HOSTS = ['app.studentsonly.in', '*']
 

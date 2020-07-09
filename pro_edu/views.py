@@ -1,10 +1,12 @@
 from django.shortcuts import render, HttpResponse
-from diya_api.models import Channel,Esubscibers
+from diya_api.models import Channel,Esubscibers,Elogin
 import json,ast
+from datetime import datetime
 # Create your views here.
 from django.views.decorators.csrf import csrf_exempt
 from uuid import uuid4
 from datetime import datetime
+
 def index(request, domain):
     data = {'response':0,'status':'Not OK','message':''}
     try:
@@ -41,6 +43,13 @@ def login(request,domain):
             user.save()
             data['response'] = 200
             data['status'] = 'OK'
+            Elogin(
+                euser = user,
+                datetime_text = datetime.now(),
+                location = '%s'%(request.META['REMOTE_ADDR']),
+                ip = request.META['REMOTE_ADDR'],
+                agent = request.META['HTTP_USER_AGENT']
+            ).save()
     except Exception as e:
         data['response'] = 404
         data['message'] = 'invalid Username or Password'
@@ -55,6 +64,10 @@ def programmes(request,domain,auth):
         user = Esubscibers.objects.get(auth=auth,key=token,client=channel.who)
         #print(user)
         data['tempuser'] = user.username
+        data['user'] = {}
+        data['user']['name'] = '%s'%(user.name)
+        data['user']['programme'] = '%s'%(user.programme.name)
+        data['user']['channel'] = '%s'%(user.programme.channel.name)
         try:
             data['response'] = 200
             #print("here")
@@ -107,3 +120,9 @@ def programmes(request,domain,auth):
         data['message'] = '%s' % (e)
         #print(e)
         return HttpResponse(json.dumps(data), content_type="application/json")
+@csrf_exempt
+def profile(request,auth,domain):
+    return HttpResponse(domain)
+@csrf_exempt
+def messages(request,auth,domain):
+    return HttpResponse(auth)

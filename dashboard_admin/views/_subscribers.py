@@ -1,6 +1,10 @@
 from django.shortcuts import render,redirect,HttpResponse
 from django.contrib.admin.views.decorators import staff_member_required
 from diya_api.models import Esubscibers,Programme
+import json
+from django.core import serializers
+
+
 
 @staff_member_required(login_url='/_admin/login')
 def index(request):
@@ -25,3 +29,21 @@ def addser(request):
         return redirect('/_admin/subscribers')
     except Exception as e:
         return  redirect('/_admin')
+@staff_member_required(login_url='/_admin/login')
+def never_logged(request):
+    data = request.user.client.eusers.filter(auth="?",key="?")
+    data = serializers.serialize('json', data)
+    var_list = []
+    for data in json.loads(data):
+        var_list.append(data['fields']['name'])
+    data= var_list
+    return HttpResponse(json.dumps(data), content_type="application/json")
+@staff_member_required(login_url='/_admin/login')
+def logged(request):
+    data = request.user.client.eusers.exclude(auth="?",key="?")
+    data = serializers.serialize('json', data)
+    var_list = []
+    for data in json.loads(data):
+        var_list.append(data['fields']['name'])
+    data= var_list
+    return HttpResponse(json.dumps(data), content_type="application/json")

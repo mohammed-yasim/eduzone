@@ -17,6 +17,8 @@ urlpatterns = [
     path("subscribers/",include([
          path("",_subscribers.index),
          path("add",_subscribers.addser),
+         path("notenrolled",_subscribers.never_logged),
+         path("enrolled",_subscribers.logged),
     ])),
     #videos
     path("videos/",include([
