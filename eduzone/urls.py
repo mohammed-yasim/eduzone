@@ -22,7 +22,9 @@ from django.views.static import serve
 from django.views.generic import TemplateView
 from classroom.views import app
 from studentsonly.views import index as mainpage,service,service2
-
+from django.shortcuts import redirect
+def smaasred(request):
+    return redirect('/')
 
 urlpatterns = [
     path('_infox/', admin.site.urls),

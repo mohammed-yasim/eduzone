@@ -149,3 +149,5 @@ MEDIA_URL = '/media/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'eduzone_static')
 STATIC_URL = '/static/'
+
+LOGIN_REDIRECT_URL = '/'

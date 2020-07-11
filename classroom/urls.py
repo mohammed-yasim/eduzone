@@ -15,7 +15,7 @@ urlpatterns = [
     ),
     path(
         'logout/',
-        auth_django.LogoutView.as_view(next_page = '/_accounts/login'),
+        auth_django.LogoutView.as_view(next_page = '/_accounts/login?next=/'),
         name='fghfghjgh'
     ),
     path(
